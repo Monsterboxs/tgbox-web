@@ -171,7 +171,7 @@
         tg.expand();
         tg.ready();
 
-        // 🌟 动态主题侦测 (自动匹配 TG 深浅模式切换毛玻璃质感)
+        // 🌟 动态主题侦测 (自动匹配 TG 深浅模式)
         function applyTheme() {
             if (tg.colorScheme === 'dark') {
                 document.documentElement.style.setProperty('--glass-bg', 'rgba(30, 30, 30, 0.65)');
@@ -186,22 +186,25 @@
             }
         }
         tg.onEvent('themeChanged', applyTheme);
-        applyTheme(); // 页面加载时立即执行一次
+        applyTheme(); 
 
         let allMovies = [];
         
-        // 🛑 注意：必须把这里的单引号内容替换为你真实的 Gist ID
-        const gistId = '59482aaad8266d4eef76fcf907cf16c5'; 
+        // 🌟 使用绝对路径直连，并加上时间戳强制绕过缓存
+        const dbUrl = `https://monsterboxs.github.io/tgbox-web/database.json?t=${new Date().getTime()}`;
 
-        fetch(`https://api.github.com/gists/${gistId}`)
-            .then(response => response.json())
+        fetch(dbUrl)
+            .then(response => {
+                if (!response.ok) throw new Error("File not found");
+                return response.json();
+            })
             .then(data => {
-                const jsonString = data.files['database.json'].content;
-                allMovies = JSON.parse(jsonString);
+                allMovies = data;
                 renderList(allMovies.slice(0, 50)); 
             })
             .catch(err => {
-                document.getElementById('loading').innerText = "❌ 数据库加载失败";
+                document.getElementById('loading').innerText = "❌ 数据库加载失败，请联系管理员";
+                console.error(err);
             });
 
         document.getElementById('searchInput').addEventListener('input', function(e) {
@@ -245,6 +248,7 @@
             listDiv.innerHTML = html;
         }
 
+        // 🌟 唤起即时预览，并自动关闭底部面板
         function openResource(url) {
             if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             tg.openLink(url, {try_instant_view: true});
