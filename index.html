@@ -248,17 +248,12 @@
             listDiv.innerHTML = html;
         }
 
-        // 🌟 唤起即时预览，并安全关闭面板
+        // 🌟 唤起即时预览，让面板在后台常驻待命！
         function openResource(url) {
             if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             
-            // 1. 发送打开链接的指令
+            // 发送打开链接指令（千万不要加 tg.close() 了！）
             tg.openLink(url, {try_instant_view: true});
-            
-            // 2. 延迟 300 毫秒再关闭面板，防止 iOS 吞噬跳转指令
-            setTimeout(function() {
-                tg.close(); 
-            }, 300);
         }
     </script>
 </body>
