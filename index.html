@@ -71,26 +71,12 @@
         }
         
         .item-content { flex: 1; overflow: hidden; }
-        
-        /* 新增：标题与标签的包裹层，使用 Flex 布局保证不换行对齐 */
-        .title-wrapper { display: flex; align-items: center; margin-bottom: 4px; }
-        
-        /* 新增：圆润的小标签基础样式 */
-        .badge-tag {
-            display: inline-block; padding: 2px 6px; border-radius: 6px; 
-            font-size: 11px; font-weight: 700; margin-right: 6px; 
-            color: #ffffff; white-space: nowrap; flex-shrink: 0;
-        }
-        /* 新增：电影和剧集的专属颜色 */
-        .badge-movie { background-color: var(--button-color); } /* 默认跟随主题蓝 */
-        .badge-tv { background-color: #ff9500; } /* 剧集使用橙色高亮 */
-
-        .item-title { flex: 1; font-size: 17px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.3px;}
+        .item-title { font-size: 17px; font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.3px;}
         .item-desc { font-size: 13px; color: var(--hint-color); font-weight: 500;}
 
         .item-action { 
             background-color: var(--button-color); color: var(--button-text-color); border: none; 
-            border-radius: 16px; padding: 8px 18px; font-size: 15px; font-weight: 600; box-shadow: 0 4px 12px rgba(var(--button-color), 0.3); margin-left: 10px;
+            border-radius: 16px; padding: 8px 18px; font-size: 15px; font-weight: 600; box-shadow: 0 4px 12px rgba(var(--button-color), 0.3);
         }
         #loading { text-align: center; padding: 40px 20px; color: var(--hint-color); font-size: 15px; font-weight: 500;}
     </style>
@@ -161,7 +147,7 @@
             renderList(filtered.slice(0, 100)); 
         });
 
-        // 🌟 核心修改区域
+        // 🌟 核心修改区域：智能提取年份与资源类型
         function renderList(movies) {
             const listDiv = document.getElementById('resourceList');
             if (movies.length === 0) {
@@ -171,44 +157,31 @@
             let html = "";
             movies.forEach(item => {
                 let shortTitle = item.title;
-                let year = "经典"; 
-                let resType = "115网盘资源"; 
+                let year = "经典"; // 如果没抓到年份，显示经典
+                let resType = "115网盘资源"; // 默认显示为 115
 
-                // 1. 提取年份
+                // 1. 匹配结尾的年份，如：异星战场 (2012)
                 const match = item.title.match(/^(.*?)(?:\s*[（\(](\d{4})[）\)])?$/);
                 if (match) {
-                    shortTitle = match[1].trim(); 
+                    shortTitle = match[1].trim(); // 获取纯标题
                     if (match[2]) {
-                        year = match[2]; 
+                        year = match[2]; // 提取出真实的年份
                     }
                 }
 
+                // 2. 根据标题中的特殊字眼，动态替换资源类型
                 const lowerTitle = item.title.toLowerCase();
-                
-                // 2. 判断资源类型
                 if (lowerTitle.includes("ed2k") || lowerTitle.includes("电驴")) {
                     resType = "ed2k";
                 } else if (lowerTitle.includes("magnet") || lowerTitle.includes("磁力")) {
                     resType = "magnet";
                 }
 
-                // 3. 智能推断：电影 or 剧集
-                let mediaType = "电影";
-                let badgeClass = "badge-movie";
-                // 如果标题包含季、集、S01、EP01、完结等字眼，则判定为剧集
-                if (/[季集]/.test(item.title) || /s\d+/i.test(item.title) || /ep\d+/i.test(item.title) || lowerTitle.includes("完结")) {
-                    mediaType = "剧集";
-                    badgeClass = "badge-tv"; // 使用显眼的橙色
-                }
-
                 html += `
                 <div class="list-item" onclick="openResource('${item.url}')">
                     <img class="item-icon-img" src="${item.image}" alt="海报">
                     <div class="item-content">
-                        <div class="title-wrapper">
-                            <span class="badge-tag ${badgeClass}">${mediaType}</span>
-                            <div class="item-title">${shortTitle}</div>
-                        </div>
+                        <div class="item-title">${shortTitle}</div>
                         <div class="item-desc">${year} · ${resType}</div>
                     </div>
                     <button class="item-action">打开</button>
