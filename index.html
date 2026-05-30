@@ -14,14 +14,12 @@
             --button-text-color: var(--tg-theme-button-text-color, #ffffff);
             --secondary-bg-color: var(--tg-theme-secondary-bg-color, #f2f2f7);
             
-            /* 预设动态毛玻璃变量 */
             --glass-bg: rgba(255, 255, 255, 0.65);
             --glass-border: rgba(255, 255, 255, 0.5);
             --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
             --title-gradient: linear-gradient(135deg, #000000 0%, #007aff 100%);
         }
 
-        /* 注入动态光晕背景 */
         body { 
             margin: 0; 
             background-color: var(--secondary-bg-color); 
@@ -39,115 +37,47 @@
             background: #ff2d55; opacity: 0.08; filter: blur(60px); z-index: -1; border-radius: 50%;
         }
 
-        /* 苹果风渐变大标题 */
-        .header { 
-            padding: 24px 20px 10px; 
-        }
+        .header { padding: 24px 20px 10px; }
         .header-title {
-            font-size: 38px; 
-            font-weight: 800; 
-            letter-spacing: -1px;
-            background: var(--title-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
+            font-size: 38px; font-weight: 800; letter-spacing: -1px;
+            background: var(--title-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;
         }
 
-        /* 悬浮毛玻璃搜索框 */
         .search-container { 
-            padding: 10px 20px; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100;
-            background: rgba(var(--secondary-bg-color), 0.5); /* 顶部边缘防透色 */
+            padding: 10px 20px; position: sticky; top: 0; z-index: 100; background: rgba(var(--secondary-bg-color), 0.5); 
         }
         .search-box { 
-            width: 100%; 
-            box-sizing: border-box; 
-            background: var(--glass-bg); 
-            border: 1px solid var(--glass-border); 
-            box-shadow: var(--glass-shadow);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 20px; 
-            padding: 14px 20px; 
-            font-size: 16px; 
-            color: var(--text-color); 
-            outline: none; 
+            width: 100%; box-sizing: border-box; background: var(--glass-bg); border: 1px solid var(--glass-border); 
+            box-shadow: var(--glass-shadow); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px; padding: 14px 20px; font-size: 16px; color: var(--text-color); outline: none; 
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .search-box:focus {
-            transform: scale(1.02);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-        }
-        .search-box::placeholder { color: var(--hint-color); font-weight: 500;}
+        .search-box:focus { transform: scale(1.02); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08); }
+        .search-box::placeholder { color: var(--hint-color); font-weight: 500; }
 
-        /* 列表区域 */
-        .list-header { 
-            padding: 16px 24px 10px; 
-            font-size: 14px; 
-            font-weight: 600;
-            color: var(--hint-color); 
-        }
-        .list-section { 
-            padding: 0 20px 30px; 
-        }
+        .list-header { padding: 16px 24px 10px; font-size: 14px; font-weight: 600; color: var(--hint-color); }
+        .list-section { padding: 0 20px 30px; }
 
-        /* 圆角独立卡片 */
         .list-item { 
-            display: flex; 
-            align-items: center; 
-            padding: 14px; 
-            margin-bottom: 14px;
-            background: var(--glass-bg); 
-            border: 1px solid var(--glass-border); 
-            box-shadow: var(--glass-shadow);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 22px; 
-            cursor: pointer; 
+            display: flex; align-items: center; padding: 14px; margin-bottom: 14px;
+            background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 22px; cursor: pointer; 
             transition: transform 0.1s ease;
         }
         .list-item:active { transform: scale(0.97); }
         
-        /* 圆润海报图 */
         .item-icon-img { 
-            width: 54px; 
-            height: 76px; 
-            object-fit: cover; 
-            border-radius: 12px; 
-            margin-right: 16px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 54px; height: 76px; object-fit: cover; border-radius: 12px; margin-right: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         
         .item-content { flex: 1; overflow: hidden; }
-        .item-title { 
-            font-size: 17px; 
-            font-weight: 600; 
-            margin-bottom: 4px; 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
-            letter-spacing: -0.3px;
-        }
-        .item-desc { 
-            font-size: 13px; 
-            color: var(--hint-color); 
-            font-weight: 500;
-        }
+        .item-title { font-size: 17px; font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.3px;}
+        .item-desc { font-size: 13px; color: var(--hint-color); font-weight: 500;}
 
-        /* 精致按钮 */
         .item-action { 
-            background-color: var(--button-color); 
-            color: var(--button-text-color); 
-            border: none; 
-            border-radius: 16px; 
-            padding: 8px 18px; 
-            font-size: 15px; 
-            font-weight: 600; 
-            box-shadow: 0 4px 12px rgba(var(--button-color), 0.3);
+            background-color: var(--button-color); color: var(--button-text-color); border: none; 
+            border-radius: 16px; padding: 8px 18px; font-size: 15px; font-weight: 600; box-shadow: 0 4px 12px rgba(var(--button-color), 0.3);
         }
-
         #loading { text-align: center; padding: 40px 20px; color: var(--hint-color); font-size: 15px; font-weight: 500;}
     </style>
 </head>
@@ -171,7 +101,6 @@
         tg.expand();
         tg.ready();
 
-        // 🌟 动态主题侦测 (自动匹配 TG 深浅模式)
         function applyTheme() {
             if (tg.colorScheme === 'dark') {
                 document.documentElement.style.setProperty('--glass-bg', 'rgba(30, 30, 30, 0.65)');
@@ -190,7 +119,6 @@
 
         let allMovies = [];
         
-        // 🌟 使用绝对路径直连，并加上时间戳强制绕过缓存
         const dbUrl = `https://monsterboxs.github.io/tgbox-web/database.json?t=${new Date().getTime()}`;
 
         fetch(dbUrl)
@@ -204,7 +132,6 @@
             })
             .catch(err => {
                 document.getElementById('loading').innerText = "❌ 数据库加载失败，请联系管理员";
-                console.error(err);
             });
 
         document.getElementById('searchInput').addEventListener('input', function(e) {
@@ -220,6 +147,7 @@
             renderList(filtered.slice(0, 100)); 
         });
 
+        // 🌟 核心修改区域：智能提取年份与资源类型
         function renderList(movies) {
             const listDiv = document.getElementById('resourceList');
             if (movies.length === 0) {
@@ -229,17 +157,32 @@
             let html = "";
             movies.forEach(item => {
                 let shortTitle = item.title;
-                let year = "经典呈现";
-                const match = item.title.match(/^(.*?)(?:\s*\(\d{4}\))?$/);
+                let year = "经典"; // 如果没抓到年份，显示经典
+                let resType = "115网盘资源"; // 默认显示为 115
+
+                // 1. 匹配结尾的年份，如：异星战场 (2012)
+                const match = item.title.match(/^(.*?)(?:\s*[（\(](\d{4})[）\)])?$/);
                 if (match) {
-                    shortTitle = match[1].trim();
+                    shortTitle = match[1].trim(); // 获取纯标题
+                    if (match[2]) {
+                        year = match[2]; // 提取出真实的年份
+                    }
                 }
+
+                // 2. 根据标题中的特殊字眼，动态替换资源类型
+                const lowerTitle = item.title.toLowerCase();
+                if (lowerTitle.includes("ed2k") || lowerTitle.includes("电驴")) {
+                    resType = "ed2k";
+                } else if (lowerTitle.includes("magnet") || lowerTitle.includes("磁力")) {
+                    resType = "magnet";
+                }
+
                 html += `
                 <div class="list-item" onclick="openResource('${item.url}')">
                     <img class="item-icon-img" src="${item.image}" alt="海报">
                     <div class="item-content">
                         <div class="item-title">${shortTitle}</div>
-                        <div class="item-desc">${year} · 115网盘</div>
+                        <div class="item-desc">${year} · ${resType}</div>
                     </div>
                     <button class="item-action">打开</button>
                 </div>
@@ -248,11 +191,8 @@
             listDiv.innerHTML = html;
         }
 
-        // 🌟 唤起即时预览，让面板在后台常驻待命！
         function openResource(url) {
             if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            
-            // 发送打开链接指令（千万不要加 tg.close() 了！）
             tg.openLink(url, {try_instant_view: true});
         }
     </script>
