@@ -67,7 +67,13 @@
         .list-item:active { transform: scale(0.97); }
         
         .item-icon-img { 
-            width: 54px; height: 76px; object-fit: cover; border-radius: 12px; margin-right: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 54px; 
+            height: 76px; 
+            object-fit: contain; /* 🌟 核心：从裁切铺满改为完整等比缩放 */
+            background-color: rgba(150, 150, 150, 0.15); /* 🌟 给不规则图片加一个极其淡的底托 */
+            border-radius: 12px; 
+            margin-right: 16px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         
         .item-content { flex: 1; overflow: hidden; }
