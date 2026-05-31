@@ -11,7 +11,6 @@
             --text-color: var(--tg-theme-text-color, #000000);
             --hint-color: var(--tg-theme-hint-color, #999999);
             --button-color: var(--tg-theme-button-color, #007aff);
-            --button-text-color: var(--tg-theme-button-text-color, #ffffff);
             --secondary-bg-color: var(--tg-theme-secondary-bg-color, #f2f2f7);
             
             --glass-bg: rgba(255, 255, 255, 0.65);
@@ -21,12 +20,9 @@
         }
 
         body { 
-            margin: 0; 
-            background-color: var(--secondary-bg-color); 
-            color: var(--text-color); 
+            margin: 0; background-color: var(--secondary-bg-color); color: var(--text-color); 
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif; 
-            overflow-x: hidden; 
-            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden; -webkit-font-smoothing: antialiased;
         }
 
         /* 🌟 全局动态环境光背景 */
@@ -42,7 +38,7 @@
             background: var(--title-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;
         }
 
-        /* 🌟 伪装的搜索触发按钮 (原来输入框的位置) */
+        /* 🌟 主页伪装的搜索按钮 */
         .search-container { padding: 10px 20px; position: sticky; top: 0; z-index: 100; background: rgba(var(--secondary-bg-color), 0.5); }
         .search-trigger { 
             width: 100%; box-sizing: border-box; background: var(--glass-bg); border: 1px solid var(--glass-border); 
@@ -54,7 +50,9 @@
 
         .list-header { padding: 16px 24px 10px; font-size: 14px; font-weight: 600; color: var(--hint-color); }
         
-        /* 🌟 网格海报墙布局 */
+        /* ========================================= */
+        /* 🌟 主页专属：两列大网格海报墙 */
+        /* ========================================= */
         .list-section { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 0 20px 40px; }
         .list-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.1s ease; margin-bottom: 10px; min-width: 0; }
         .list-item:active { transform: scale(0.95); }
@@ -68,91 +66,46 @@
         #loading { grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: var(--hint-color); font-size: 15px; font-weight: 500;}
 
         /* ========================================= */
-        /* 🌟 核心新增：Spotlight 悬浮搜索模态框样式 (iOS 玻璃版) */
+        /* 🌟 悬浮搜索模态框 (使用 100dvh 完美对抗 iOS 键盘) */
         /* ========================================= */
         .search-modal {
-            position: fixed; 
-            /* 🌟 核心：用绝对像素写死巨大出血线，不管系统高度怎么变，它纹丝不动 */
-            top: -500px; 
-            left: -500px; 
-            right: -500px; 
-            bottom: -500px; 
+            position: fixed; top: 0; left: 0; right: 0; 
+            height: 100dvh; /* 🌟 现代规范：动态视口高度，键盘弹起自动完美适应 */
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.3); 
-            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-            display: flex; flex-direction: column; align-items: center; 
-            /* 🌟 核心：500px 用于抵消顶部的负偏移，100px 是窗口离屏幕顶部的真实固定距离 */
-            padding-top: calc(500px + 100px); 
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            background: rgba(0, 0, 0, 0.35); 
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            display: flex; flex-direction: column; align-items: center; padding-top: 8vh;
+            opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
         }
-
         .search-modal.active { opacity: 1; pointer-events: auto; }
         
         .search-modal-box {
             width: 90%; max-width: 500px; 
-            /* 🌟 核心更改：使用自适应毛玻璃材质替换死板的深色 */
-            background: var(--glass-bg); 
-            border: 1px solid var(--glass-border); 
-            border-radius: 20px;
+            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); 
             backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            overflow: hidden;
-            display: flex; flex-direction: column; max-height: 75vh;
+            overflow: hidden; display: flex; flex-direction: column; max-height: 75vh;
             transform: scale(0.95) translateY(-20px); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .search-modal.active .search-modal-box { transform: scale(1) translateY(0); }
 
         .search-modal-header { display: flex; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--glass-border); }
-        /* 文字和占位符全部改为跟随系统颜色 */
         .search-modal-input { flex: 1; background: transparent; border: none; color: var(--text-color); font-size: 16px; outline: none; caret-color: var(--button-color);}
         .search-modal-input::placeholder { color: var(--hint-color); }
         .search-modal-close { background: rgba(150, 150, 150, 0.15); color: var(--text-color); border: none; padding: 6px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; margin-left: 12px; transition: background 0.2s;}
         .search-modal-close:active { background: rgba(150, 150, 150, 0.25); }
-
         .search-modal-body { padding: 16px; overflow-y: auto; flex: 1; }
-        .search-modal-body .list-section { padding: 0; }
-        /* 删除了强行锁死白色的代码，让搜索结果的文字也跟随系统亮暗模式 */
         .search-placeholder-text { text-align: center; color: var(--hint-color); font-size: 14px; padding: 40px 0; font-weight: 500;}
-        
+
         /* ========================================= */
-        /* 🌟 搜索模态框专属样式覆盖：强制将网格转为紧凑列表 */
+        /* 🌟 搜索结果专属：强行转为迷你紧凑列表！ */
         /* ========================================= */
-        .search-modal-body .list-section { 
-            display: flex; /* 取消两列网格，改为上下排列的列表 */
-            flex-direction: column; 
-            gap: 10px; 
-            padding: 4px 10px 20px; 
-        }
-        .search-modal-body .list-item { 
-            flex-direction: row; /* 让海报和文字左右横向排列 */
-            align-items: center; 
-            padding: 10px; 
-            margin-bottom: 0;
-            background: rgba(150, 150, 150, 0.08); /* 加上极浅的卡片底色，区分每个结果 */
-            border-radius: 16px;
-        }
-        .search-modal-body .item-icon-wrapper { 
-            width: 48px; /* 🌟 变成迷你小海报 */
-            margin-bottom: 0; 
-            margin-right: 14px; 
-            border-radius: 8px;
-        }
-        .search-modal-body .item-content { 
-            text-align: left; /* 文字改为靠左对齐 */
-        }
-        .search-modal-body .item-title { 
-            font-size: 14px; 
-            margin-bottom: 4px;
-            white-space: normal; 
-            word-break: break-word; 
-            line-height: 1.3; 
-            display: -webkit-box;
-            -webkit-line-clamp: 2; 
-            -webkit-box-orient: vertical;
-        }
-        .search-modal-body .item-desc { 
-            font-size: 12px;
-        }
+        .search-modal-body .list-section { display: flex; flex-direction: column; gap: 10px; padding: 4px 10px 20px; }
+        .search-modal-body .list-item { flex-direction: row; align-items: center; padding: 10px; margin-bottom: 0; background: rgba(150, 150, 150, 0.08); border-radius: 16px; }
+        .search-modal-body .item-icon-wrapper { width: 44px; height: 62px; aspect-ratio: auto; margin-bottom: 0; margin-right: 14px; border-radius: 8px; }
+        .search-modal-body .item-content { text-align: left; }
+        .search-modal-body .item-title { font-size: 14px; margin-bottom: 2px; white-space: normal; word-break: break-word; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .search-modal-body .item-desc { font-size: 12px; }
     </style>
 </head>
 <body>
@@ -164,9 +117,7 @@
     </div>
     
     <div class="search-container">
-        <div class="search-trigger" id="openSearchBtn">
-            🔍 探索影视宇宙...
-        </div>
+        <div class="search-trigger" id="openSearchBtn">🔍 探索影视宇宙...</div>
     </div>
 
     <div class="list-header">✨ 最新入库</div>
@@ -228,47 +179,32 @@
                 document.getElementById('resourceList').innerHTML = '<div id="loading">❌ 数据库加载失败</div>';
             });
 
-        // 🌟 悬浮搜索的交互逻辑
         const searchModal = document.getElementById('searchModal');
         const openSearchBtn = document.getElementById('openSearchBtn');
         const closeSearchBtn = document.getElementById('closeSearchBtn');
         const realSearchInput = document.getElementById('realSearchInput');
         const searchPlaceholder = document.getElementById('searchPlaceholder');
         const modalResourceList = document.getElementById('modalResourceList');
-        // 🌟 核心修复 2：创建一个变量，记住用户点开搜索前的滚动位置
-        let savedScrollY = 0; 
 
-        // 打开搜索框
+        // 🌟 纯净的开启逻辑，丢掉所有多余的 body 定位锁死
         openSearchBtn.addEventListener('click', () => {
             if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            
-            // 🌟 换用最温和的防滚动方式：只隐藏滚动条，不改变底层布局，防止系统强行纠错弹跳
-            document.body.style.overflow = 'hidden';
-            document.documentElement.style.overflow = 'hidden';
-            
             searchModal.classList.add('active');
             setTimeout(() => realSearchInput.focus(), 150); 
         });
 
-        // 关闭搜索框
         function closeModal() {
             searchModal.classList.remove('active');
             realSearchInput.value = ''; 
             modalResourceList.innerHTML = ''; 
             modalResourceList.style.display = 'none';
             searchPlaceholder.style.display = 'block';
-            
-            // 🌟 恢复底层正常滚动
-            document.body.style.overflow = '';
-            document.documentElement.style.overflow = '';
         }
-        
         closeSearchBtn.addEventListener('click', closeModal);
         searchModal.addEventListener('click', (e) => {
             if (e.target === searchModal) closeModal(); 
         });
 
-        // 实时搜索过滤
         realSearchInput.addEventListener('input', function(e) {
             const term = e.target.value.toLowerCase().trim();
             if (!term) {
@@ -278,15 +214,11 @@
                 return;
             }
             searchPlaceholder.style.display = 'none';
-            // 🌟 修复：将其改为 flex，释放列表天性！
-            modalResourceList.style.display = 'flex'; 
+            modalResourceList.style.display = 'flex'; // 🌟 搜索结果强制为 flex 列表模式
             const filtered = allMovies.filter(m => m.title.toLowerCase().includes(term));
-            
-            // 🌟 核心：将结果渲染到模态框的容器里
             renderList(filtered.slice(0, 100), 'modalResourceList'); 
         });
 
-        // 🌟 渲染列表函数支持指定目标容器 (targetId)
         function renderList(movies, targetId) {
             const listDiv = document.getElementById(targetId);
             if (movies.length === 0) {
