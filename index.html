@@ -253,7 +253,8 @@
                 return;
             }
             searchPlaceholder.style.display = 'none';
-            modalResourceList.style.display = 'grid';
+            // 🌟 修复：将其改为 flex，释放列表天性！
+            modalResourceList.style.display = 'flex'; 
             const filtered = allMovies.filter(m => m.title.toLowerCase().includes(term));
             
             // 🌟 核心：将结果渲染到模态框的容器里
