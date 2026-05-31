@@ -242,14 +242,11 @@
         openSearchBtn.addEventListener('click', () => {
             if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             
-            // 🌟 锁死底层网页：强行把 body 固定住，绝对禁止 iOS 把它往上顶
-            savedScrollY = window.scrollY;
-            document.body.style.position = 'fixed';
-            document.body.style.top = `-${savedScrollY}px`;
-            document.body.style.width = '100%';
+            // 🌟 换用最温和的防滚动方式：只隐藏滚动条，不改变底层布局，防止系统强行纠错弹跳
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
             
             searchModal.classList.add('active');
-            // 稍微延迟对焦，等动画平稳后再呼出键盘
             setTimeout(() => realSearchInput.focus(), 150); 
         });
 
@@ -261,11 +258,9 @@
             modalResourceList.style.display = 'none';
             searchPlaceholder.style.display = 'block';
             
-            // 🌟 解除锁定：恢复网页原本的滚动状态，并瞬间跳回刚才看的位置
-            document.body.style.position = '';
-            document.body.style.top = '';
-            document.body.style.width = '';
-            window.scrollTo(0, savedScrollY);
+            // 🌟 恢复底层正常滚动
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
         }
         
         closeSearchBtn.addEventListener('click', closeModal);
