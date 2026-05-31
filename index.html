@@ -66,43 +66,35 @@
         #loading { grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: var(--hint-color); font-size: 15px; font-weight: 500;}
 
         /* ========================================= */
-        /* 🌟 悬浮搜索模态框 (原生底部半屏 / Bottom Sheet 风格) */
+        /* 🌟 搜索模态框 (全屏沉浸式风格) */
         /* ========================================= */
         .search-modal {
             position: fixed; top: 0; left: 0; right: 0; 
-            height: 100dvh; /* 🌟 动态适配键盘 */
+            height: 100dvh; 
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.35); 
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            background: transparent; /* 🌟 内部面板已经全屏了，外层不再需要黑底色 */
             display: flex; flex-direction: column; 
-            justify-content: flex-end; /* 🌟 核心：让弹窗沉到屏幕最底下 */
+            justify-content: flex-end; 
             opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
         }
         .search-modal.active { opacity: 1; pointer-events: auto; }
         
         .search-modal-box {
-            width: 100%; /* 🌟 占满全宽 */
+            width: 100%; 
             max-width: 100%; 
-            height: 65vh; /* 🌟 设定一个黄金比例的高度 */
+            height: 100dvh; /* 🌟 核心：高度拉到100%，占满整个屏幕 */
             background: var(--glass-bg); 
-            border-top: 1px solid var(--glass-border); 
-            border-radius: 24px 24px 0 0; /* 🌟 只有顶部两个角是圆润的 */
-            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.15); 
+            border: none; /* 🌟 去除顶部边框 */
+            border-radius: 0; /* 🌟 去除圆角，完美贴合屏幕边缘 */
             backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
             overflow: hidden; display: flex; flex-direction: column;
-            transform: translateY(100%); /* 🌟 动画：隐藏时在屏幕下方 */
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1); /* 丝滑的滑出动画 */
+            transform: translateY(100%); 
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1); 
         }
-        .search-modal.active .search-modal-box { transform: translateY(0); /* 🌟 滑出并紧贴底部/键盘 */ }
+        .search-modal.active .search-modal-box { transform: translateY(0); }
 
-        /* 🌟 原生感细节：添加顶部中央的拖拽指示条 */
-        .search-modal-box::before {
-            content: ''; display: block; width: 36px; height: 4px;
-            background: var(--hint-color); border-radius: 2px;
-            margin: 10px auto -2px; opacity: 0.3;
-        }
-
-        .search-modal-header { display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--glass-border); }
+        /* 🌟 稍微增加一点顶部内边距，防止全屏后文字和手机顶部的状态栏（时间/电量）重叠 */
+        .search-modal-header { display: flex; align-items: center; padding: 24px 20px 16px; border-bottom: 1px solid var(--glass-border); }
         .search-modal-input { flex: 1; background: transparent; border: none; color: var(--text-color); font-size: 16px; outline: none; caret-color: var(--button-color);}
         .search-modal-input::placeholder { color: var(--hint-color); }
         .search-modal-close { background: rgba(150, 150, 150, 0.15); color: var(--text-color); border: none; padding: 6px 14px; border-radius: 14px; font-size: 13px; font-weight: 600; cursor: pointer; margin-left: 12px; transition: background 0.2s;}
