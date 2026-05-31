@@ -71,8 +71,11 @@
         /* 🌟 核心新增：Spotlight 悬浮搜索模态框样式 (iOS 玻璃版) */
         /* ========================================= */
         .search-modal {
-            position: fixed; inset: 0; z-index: 1000;
-            background: rgba(0, 0, 0, 0.3); /* 背后的大遮罩调得更通透一些 */
+            position: fixed; 
+            top: 0; left: 0; right: 0; 
+            height: 150vh; 
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.3); 
             backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
             display: flex; flex-direction: column; align-items: center; padding-top: 12vh;
             opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
@@ -226,12 +229,21 @@
         const realSearchInput = document.getElementById('realSearchInput');
         const searchPlaceholder = document.getElementById('searchPlaceholder');
         const modalResourceList = document.getElementById('modalResourceList');
+        // 🌟 核心修复 2：创建一个变量，记住用户点开搜索前的滚动位置
+        let savedScrollY = 0; 
 
         // 打开搜索框
         openSearchBtn.addEventListener('click', () => {
             if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            
+            // 🌟 锁死底层网页：强行把 body 固定住，绝对禁止 iOS 把它往上顶
+            savedScrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${savedScrollY}px`;
+            document.body.style.width = '100%';
+            
             searchModal.classList.add('active');
-            // 稍微延迟对焦，配合弹出的动画更丝滑
+            // 稍微延迟对焦，等动画平稳后再呼出键盘
             setTimeout(() => realSearchInput.focus(), 150); 
         });
 
@@ -242,9 +254,15 @@
             modalResourceList.innerHTML = ''; 
             modalResourceList.style.display = 'none';
             searchPlaceholder.style.display = 'block';
+            
+            // 🌟 解除锁定：恢复网页原本的滚动状态，并瞬间跳回刚才看的位置
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, savedScrollY);
         }
+        
         closeSearchBtn.addEventListener('click', closeModal);
-        // 点击黑色背景也能关闭
         searchModal.addEventListener('click', (e) => {
             if (e.target === searchModal) closeModal(); 
         });
