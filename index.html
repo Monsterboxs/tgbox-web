@@ -104,6 +104,40 @@
         .search-modal-body .list-section { padding: 0; }
         /* 删除了强行锁死白色的代码，让搜索结果的文字也跟随系统亮暗模式 */
         .search-placeholder-text { text-align: center; color: var(--hint-color); font-size: 14px; padding: 40px 0; font-weight: 500;}
+        
+        /* ========================================= */
+        /* 🌟 搜索模态框专属样式覆盖：强制将网格转为紧凑列表 */
+        /* ========================================= */
+        .search-modal-body .list-section { 
+            display: flex; /* 取消两列网格，改为上下排列的列表 */
+            flex-direction: column; 
+            gap: 10px; 
+            padding: 4px 10px 20px; 
+        }
+        .search-modal-body .list-item { 
+            flex-direction: row; /* 让海报和文字左右横向排列 */
+            align-items: center; 
+            padding: 10px; 
+            margin-bottom: 0;
+            background: rgba(150, 150, 150, 0.08); /* 加上极浅的卡片底色，区分每个结果 */
+            border-radius: 16px;
+        }
+        .search-modal-body .item-icon-wrapper { 
+            width: 48px; /* 🌟 变成迷你小海报 */
+            margin-bottom: 0; 
+            margin-right: 14px; 
+            border-radius: 8px;
+        }
+        .search-modal-body .item-content { 
+            text-align: left; /* 文字改为靠左对齐 */
+        }
+        .search-modal-body .item-title { 
+            font-size: 15px; /* 标题稍微收敛一点 */
+            margin-bottom: 2px;
+        }
+        .search-modal-body .item-desc { 
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
