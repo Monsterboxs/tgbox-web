@@ -66,33 +66,46 @@
         #loading { grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: var(--hint-color); font-size: 15px; font-weight: 500;}
 
         /* ========================================= */
-        /* 🌟 悬浮搜索模态框 (使用 100dvh 完美对抗 iOS 键盘) */
+        /* 🌟 悬浮搜索模态框 (原生底部半屏 / Bottom Sheet 风格) */
         /* ========================================= */
         .search-modal {
             position: fixed; top: 0; left: 0; right: 0; 
-            height: 100dvh; /* 🌟 现代规范：动态视口高度，键盘弹起自动完美适应 */
+            height: 100dvh; /* 🌟 动态适配键盘 */
             z-index: 1000;
             background: rgba(0, 0, 0, 0.35); 
             backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            display: flex; flex-direction: column; align-items: center; padding-top: 8vh;
+            display: flex; flex-direction: column; 
+            justify-content: flex-end; /* 🌟 核心：让弹窗沉到屏幕最底下 */
             opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
         }
         .search-modal.active { opacity: 1; pointer-events: auto; }
         
         .search-modal-box {
-            width: 90%; max-width: 500px; 
-            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); 
+            width: 100%; /* 🌟 占满全宽 */
+            max-width: 100%; 
+            height: 65vh; /* 🌟 设定一个黄金比例的高度 */
+            background: var(--glass-bg); 
+            border-top: 1px solid var(--glass-border); 
+            border-radius: 24px 24px 0 0; /* 🌟 只有顶部两个角是圆润的 */
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.15); 
             backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            overflow: hidden; display: flex; flex-direction: column; max-height: 75vh;
-            transform: scale(0.95) translateY(-20px); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden; display: flex; flex-direction: column;
+            transform: translateY(100%); /* 🌟 动画：隐藏时在屏幕下方 */
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1); /* 丝滑的滑出动画 */
         }
-        .search-modal.active .search-modal-box { transform: scale(1) translateY(0); }
+        .search-modal.active .search-modal-box { transform: translateY(0); /* 🌟 滑出并紧贴底部/键盘 */ }
 
-        .search-modal-header { display: flex; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--glass-border); }
+        /* 🌟 原生感细节：添加顶部中央的拖拽指示条 */
+        .search-modal-box::before {
+            content: ''; display: block; width: 36px; height: 4px;
+            background: var(--hint-color); border-radius: 2px;
+            margin: 10px auto -2px; opacity: 0.3;
+        }
+
+        .search-modal-header { display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--glass-border); }
         .search-modal-input { flex: 1; background: transparent; border: none; color: var(--text-color); font-size: 16px; outline: none; caret-color: var(--button-color);}
         .search-modal-input::placeholder { color: var(--hint-color); }
-        .search-modal-close { background: rgba(150, 150, 150, 0.15); color: var(--text-color); border: none; padding: 6px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; margin-left: 12px; transition: background 0.2s;}
+        .search-modal-close { background: rgba(150, 150, 150, 0.15); color: var(--text-color); border: none; padding: 6px 14px; border-radius: 14px; font-size: 13px; font-weight: 600; cursor: pointer; margin-left: 12px; transition: background 0.2s;}
         .search-modal-close:active { background: rgba(150, 150, 150, 0.25); }
         .search-modal-body { padding: 16px; overflow-y: auto; flex: 1; }
         .search-placeholder-text { text-align: center; color: var(--hint-color); font-size: 14px; padding: 40px 0; font-weight: 500;}
