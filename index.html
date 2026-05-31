@@ -14,14 +14,12 @@
             --button-text-color: var(--tg-theme-button-text-color, #ffffff);
             --secondary-bg-color: var(--tg-theme-secondary-bg-color, #f2f2f7);
             
-            /* 预设动态毛玻璃变量 */
             --glass-bg: rgba(255, 255, 255, 0.65);
             --glass-border: rgba(255, 255, 255, 0.5);
             --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
             --title-gradient: linear-gradient(135deg, #000000 0%, #007aff 100%);
         }
 
-        /* 注入动态光晕背景 */
         body { 
             margin: 0; 
             background-color: var(--secondary-bg-color); 
@@ -30,128 +28,99 @@
             overflow-x: hidden; 
             -webkit-font-smoothing: antialiased;
         }
-        body::before {
-            content: ''; position: fixed; top: -10%; left: -20%; width: 70vw; height: 70vw;
-            background: var(--button-color); opacity: 0.12; filter: blur(60px); z-index: -1; border-radius: 50%;
-        }
-        body::after {
-            content: ''; position: fixed; bottom: -10%; right: -20%; width: 60vw; height: 60vw;
-            background: #ff2d55; opacity: 0.08; filter: blur(60px); z-index: -1; border-radius: 50%;
+
+        /* 🌟 全局动态环境光背景 */
+        .dynamic-global-bg {
+            position: fixed;
+            top: -15%; left: -15%; 
+            width: 130%; height: 130%;
+            z-index: -5; 
+            background-size: cover;
+            background-position: center;
+            filter: blur(60px) brightness(0.65) saturate(1.5); 
+            opacity: 0.6; 
+            transition: background-image 1s ease-in-out; 
         }
 
-        /* 苹果风渐变大标题 */
-        .header { 
-            padding: 24px 20px 10px; 
-        }
+        .header { padding: 24px 20px 10px; }
         .header-title {
-            font-size: 38px; 
-            font-weight: 800; 
-            letter-spacing: -1px;
-            background: var(--title-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
+            font-size: 38px; font-weight: 800; letter-spacing: -1px;
+            background: var(--title-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;
         }
 
-        /* 悬浮毛玻璃搜索框 */
         .search-container { 
-            padding: 10px 20px; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100;
-            background: rgba(var(--secondary-bg-color), 0.5); /* 顶部边缘防透色 */
+            padding: 10px 20px; position: sticky; top: 0; z-index: 100; background: rgba(var(--secondary-bg-color), 0.5); 
         }
         .search-box { 
-            width: 100%; 
-            box-sizing: border-box; 
-            background: var(--glass-bg); 
-            border: 1px solid var(--glass-border); 
-            box-shadow: var(--glass-shadow);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 20px; 
-            padding: 14px 20px; 
-            font-size: 16px; 
-            color: var(--text-color); 
-            outline: none; 
+            width: 100%; box-sizing: border-box; background: var(--glass-bg); border: 1px solid var(--glass-border); 
+            box-shadow: var(--glass-shadow); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px; padding: 14px 20px; font-size: 16px; color: var(--text-color); outline: none; 
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .search-box:focus {
-            transform: scale(1.02);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-        }
-        .search-box::placeholder { color: var(--hint-color); font-weight: 500;}
+        .search-box:focus { transform: scale(1.02); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08); }
+        .search-box::placeholder { color: var(--hint-color); font-weight: 500; }
 
-        /* 列表区域 */
-        .list-header { 
-            padding: 16px 24px 10px; 
-            font-size: 14px; 
-            font-weight: 600;
-            color: var(--hint-color); 
-        }
+        .list-header { padding: 16px 24px 10px; font-size: 14px; font-weight: 600; color: var(--hint-color); }
+        
+        /* 🌟 网格海报墙布局 */
         .list-section { 
-            padding: 0 20px 30px; 
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px; 
+            padding: 0 20px 40px; 
         }
 
-        /* 圆角独立卡片 */
+        /* 🌟 极简卡片 */
         .list-item { 
             display: flex; 
-            align-items: center; 
-            padding: 14px; 
-            margin-bottom: 14px;
-            background: var(--glass-bg); 
-            border: 1px solid var(--glass-border); 
-            box-shadow: var(--glass-shadow);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 22px; 
+            flex-direction: column; 
+            align-items: center;
             cursor: pointer; 
             transition: transform 0.1s ease;
+            background: transparent; 
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            margin-bottom: 10px;
         }
-        .list-item:active { transform: scale(0.97); }
+        .list-item:active { transform: scale(0.95); }
         
-        /* 圆润海报图 */
-        .item-icon-img { 
-            width: 54px; 
-            height: 76px; 
-            object-fit: cover; 
+        /* 🌟 2:3 海报画框 */
+        .item-icon-wrapper {
+            position: relative;
+            width: 100%; 
+            aspect-ratio: 2 / 3; 
             border-radius: 12px; 
-            margin-right: 16px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            overflow: hidden; 
+            background-color: rgba(150, 150, 150, 0.15);
+            margin-bottom: 10px; 
+            flex-shrink: 0; 
         }
         
-        .item-content { flex: 1; overflow: hidden; }
-        .item-title { 
-            font-size: 17px; 
-            font-weight: 600; 
-            margin-bottom: 4px; 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
-            letter-spacing: -0.3px;
-        }
-        .item-desc { 
-            font-size: 13px; 
-            color: var(--hint-color); 
-            font-weight: 500;
+        /* 🌟 底层氛围感模糊背景 */
+        .item-icon-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; filter: blur(12px) brightness(0.85); transform: scale(1.2); z-index: 1;
         }
 
-        /* 精致按钮 */
-        .item-action { 
-            background-color: var(--button-color); 
-            color: var(--button-text-color); 
-            border: none; 
-            border-radius: 16px; 
-            padding: 8px 18px; 
-            font-size: 15px; 
-            font-weight: 600; 
-            box-shadow: 0 4px 12px rgba(var(--button-color), 0.3);
+        /* 🌟 顶层清晰原图 (完整缩放包含) */
+        .item-icon-img { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: contain; z-index: 2;
         }
+        
+        /* 🌟 海报下方文字区域 */
+        .item-content { width: 100%; text-align: center; }
+        .item-title { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; letter-spacing: 0.5px;}
+        .item-desc { font-size: 13px; color: var(--hint-color); font-weight: 400; font-family: 'Courier New', Courier, monospace; }
 
-        #loading { text-align: center; padding: 40px 20px; color: var(--hint-color); font-size: 15px; font-weight: 500;}
+        #loading { grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: var(--hint-color); font-size: 15px; font-weight: 500;}
     </style>
 </head>
 <body>
+
+    <div id="dynamicGlobalBg" class="dynamic-global-bg"></div>
 
     <div class="header">
         <div class="header-title">Tgbox</div>
@@ -171,7 +140,6 @@
         tg.expand();
         tg.ready();
 
-        // 🌟 动态主题侦测 (自动匹配 TG 深浅模式)
         function applyTheme() {
             if (tg.colorScheme === 'dark') {
                 document.documentElement.style.setProperty('--glass-bg', 'rgba(30, 30, 30, 0.65)');
@@ -190,7 +158,6 @@
 
         let allMovies = [];
         
-        // 🌟 使用绝对路径直连，并加上时间戳强制绕过缓存
         const dbUrl = `https://monsterboxs.github.io/tgbox-web/database.json?t=${new Date().getTime()}`;
 
         fetch(dbUrl)
@@ -201,10 +168,15 @@
             .then(data => {
                 allMovies = data;
                 renderList(allMovies.slice(0, 50)); 
+                
+                // 🌟 抽取最新资源海报作为全局背景
+                if (allMovies.length > 0) {
+                    const latestImage = allMovies[0].image;
+                    document.getElementById('dynamicGlobalBg').style.backgroundImage = `url('${latestImage}')`;
+                }
             })
             .catch(err => {
                 document.getElementById('loading').innerText = "❌ 数据库加载失败，请联系管理员";
-                console.error(err);
             });
 
         document.getElementById('searchInput').addEventListener('input', function(e) {
@@ -220,6 +192,7 @@
             renderList(filtered.slice(0, 100)); 
         });
 
+        // 🌟 极简海报墙渲染逻辑
         function renderList(movies) {
             const listDiv = document.getElementById('resourceList');
             if (movies.length === 0) {
@@ -229,30 +202,38 @@
             let html = "";
             movies.forEach(item => {
                 let shortTitle = item.title;
-                let year = "经典呈现";
-                const match = item.title.match(/^(.*?)(?:\s*\(\d{4}\))?$/);
+                let year = "经典"; 
+
+                // 提取年份
+                const match = item.title.match(/^(.*?)(?:\s*[（\(](\d{4})[）\)])?$/);
                 if (match) {
-                    shortTitle = match[1].trim();
+                    shortTitle = match[1].trim(); 
+                    if (match[2]) {
+                        year = match[2]; 
+                    }
                 }
+
                 html += `
                 <div class="list-item" onclick="openResource('${item.url}')">
-                    <img class="item-icon-img" src="${item.image}" alt="海报">
+                    <div class="item-icon-wrapper">
+                        <img class="item-icon-bg" src="${item.image}" onerror="this.style.display='none'">
+                        <img class="item-icon-img" src="${item.image}" alt="海报" onerror="this.onerror=null; this.src='https://placehold.co/200x300/e2e2e7/999999?text=Tgbox';">
+                    </div>
+                    
                     <div class="item-content">
                         <div class="item-title">${shortTitle}</div>
-                        <div class="item-desc">${year} · 115网盘</div>
+                        <div class="item-desc">${year}</div>
                     </div>
-                    <button class="item-action">打开</button>
                 </div>
                 `;
             });
             listDiv.innerHTML = html;
         }
 
-        // 🌟 唤起即时预览，并自动关闭底部面板
+        // 完美 iOS 原生级下拉返回体验
         function openResource(url) {
             if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             tg.openLink(url, {try_instant_view: true});
-            tg.close(); 
         }
     </script>
 </body>
