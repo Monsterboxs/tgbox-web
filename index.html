@@ -72,14 +72,20 @@
         /* ========================================= */
         .search-modal {
             position: fixed; 
-            top: 0; left: 0; right: 0; 
-            height: 150vh; 
+            /* 🌟 核心：用绝对像素写死巨大出血线，不管系统高度怎么变，它纹丝不动 */
+            top: -500px; 
+            left: -500px; 
+            right: -500px; 
+            bottom: -500px; 
             z-index: 1000;
             background: rgba(0, 0, 0, 0.3); 
             backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-            display: flex; flex-direction: column; align-items: center; padding-top: 12vh;
+            display: flex; flex-direction: column; align-items: center; 
+            /* 🌟 核心：500px 用于抵消顶部的负偏移，100px 是窗口离屏幕顶部的真实固定距离 */
+            padding-top: calc(500px + 100px); 
             opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
+
         .search-modal.active { opacity: 1; pointer-events: auto; }
         
         .search-modal-box {
