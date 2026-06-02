@@ -296,7 +296,12 @@
 
         function openResource(url) {
             if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            tg.openLink(url, {try_instant_view: true});
+            if (!url) return;
+            let finalUrl = url.trim();
+            if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://') && !finalUrl.startsWith('magnet:') && !finalUrl.startsWith('tg:')) {
+                finalUrl = 'https://' + finalUrl;
+            }
+            tg.openLink(finalUrl, {try_instant_view: true});
         }
     </script>
 </body>
