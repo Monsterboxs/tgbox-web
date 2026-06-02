@@ -12,10 +12,6 @@
             --hint-color: var(--tg-theme-hint-color, #999999);
             --button-color: var(--tg-theme-button-color, #007aff);
             --secondary-bg-color: var(--tg-theme-secondary-bg-color, #f2f2f7);
-            
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.5);
-            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
         }
 
         body { 
@@ -32,10 +28,10 @@
         }
 
         /* ========================================= */
-        /* 🌟 顶部 Logo 与标题 (扁平几何风格) */
+        /* 🌟 顶部 Logo 与标题 (纯矢量 3D 字母盒子) */
         /* ========================================= */
         .header { padding: 24px 20px 10px; display: flex; align-items: center; gap: 10px; }
-        .logo-box { width: 32px; height: 32px; flex-shrink: 0; transition: transform 0.3s ease; }
+        .logo-box { flex-shrink: 0; transition: transform 0.3s ease; }
         .header:active .logo-box { transform: scale(0.9); }
         .header-title {
             font-size: 36px; font-weight: 900; letter-spacing: -1.5px;
@@ -45,41 +41,26 @@
         .header-title span { color: var(--button-color); }
 
         /* ========================================= */
-        /* 🌟 主页搜索触发按钮 (极致通透 iPhone 原生版) */
+        /* 🌟 主页搜索触发按钮 (极致通透 iPhone 资源库原生版) */
         /* ========================================= */
         .search-container { padding: 5px 20px 15px; position: sticky; top: 0; z-index: 100; background: transparent; }
-        
         .search-trigger { 
             width: 100%; box-sizing: border-box; 
-            
-            /* 🌟 秘诀1：抛弃发灰的底色，换成极低透明度的“纯白微霜” */
             background-color: rgba(255, 255, 255, 0.15); 
-            
-            /* 内置的原生 iOS 放大镜 SVG */
             background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='7' cy='7' r='5'/%3E%3Cline x1='11' y1='11' x2='14' y2='14'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: calc(50% - 22px) center; 
             background-size: 16px 16px;
-            
-            /* 🌟 秘诀2：超大模糊半径 (40px) + 强行拉高色彩饱和度 (200%) */
-            backdrop-filter: blur(40px) saturate(200%); 
-            -webkit-backdrop-filter: blur(40px) saturate(200%);
-            
-            /* 🌟 秘诀3：加入苹果标志性的“清脆白边高光”与微弱内发光 */
+            backdrop-filter: blur(40px) saturate(200%); -webkit-backdrop-filter: blur(40px) saturate(200%);
             border: 1px solid rgba(255, 255, 255, 0.35); 
             box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1), 0 4px 20px rgba(0, 0, 0, 0.05);
-            
             border-radius: 50px; 
             padding: 12px 20px; 
             font-size: 16px; color: var(--hint-color); font-weight: 400;
             cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             text-align: center; text-indent: 16px; display: block;
         }
-        
-        .search-trigger:active { 
-            transform: scale(0.97); 
-            background-color: rgba(255, 255, 255, 0.28); 
-        }
+        .search-trigger:active { transform: scale(0.97); background-color: rgba(255, 255, 255, 0.28); }
 
         .list-header { padding: 16px 24px 10px; font-size: 14px; font-weight: 600; color: var(--hint-color); }
         
@@ -99,7 +80,7 @@
         #loading { grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: var(--hint-color); font-size: 15px; font-weight: 500;}
 
         /* ========================================= */
-        /* 🌟 搜索模态框 (全屏沉浸式风格) */
+        /* 🌟 搜索模态框 (极致通透全屏玻璃) */
         /* ========================================= */
         .search-modal {
             position: fixed; top: 0; left: 0; right: 0; height: 100dvh; 
@@ -111,82 +92,49 @@
         
         .search-modal-box {
             width: 100%; max-width: 100%; height: 100dvh; 
-            background: var(--glass-bg); border: none; border-radius: 0; 
-            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            background: rgba(128, 128, 128, 0.05); 
+            border: none; border-radius: 0; 
+            backdrop-filter: blur(50px) saturate(200%); -webkit-backdrop-filter: blur(50px) saturate(200%);
             overflow: hidden; display: flex; flex-direction: column;
             transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1); 
         }
         .search-modal.active .search-modal-box { transform: translateY(0); }
 
-        /* 🌟 模态框头部：高度还原 iOS 点开后的搜索状态 */
-        .search-modal-header { 
-            display: flex; 
-            align-items: center; 
-            padding: 16px 20px 10px; 
-            border-bottom: none; /* 🌟 去掉底部的分割线，让头部完全融入背景 */
-        }
-        
+        /* 🌟 模态框头部与内部胶囊搜索框 */
+        .search-modal-header { display: flex; align-items: center; padding: 24px 20px 16px; border-bottom: none; }
         .search-modal-input-wrapper {
-            flex: 1; 
-            display: flex; 
-            align-items: center;
-            /* 🌟 核心：使用 iOS 原生的标准搜索框填充色，放弃高反光质感 */
-            background: rgba(118, 118, 128, 0.24); 
-            border-radius: 10px; /* 🌟 胶囊变成经典的 10px 小圆角矩形 */
-            padding: 8px 12px;
+            flex: 1; display: flex; align-items: center;
+            background: rgba(118, 118, 128, 0.24); border-radius: 50px; padding: 8px 16px;
         }
-        
-        .search-modal-input-wrapper svg { 
-            width: 16px; 
-            height: 16px; 
-            stroke: var(--hint-color); 
-            margin-right: 6px; 
-            flex-shrink: 0; 
-        }
-        
-        .search-modal-input { 
-            flex: 1; 
-            background: transparent; 
-            border: none; 
-            color: var(--text-color); 
-            font-size: 16px; 
-            outline: none; 
-            caret-color: var(--button-color);
-        }
-        
+        .search-modal-input-wrapper svg { width: 16px; height: 16px; stroke: var(--hint-color); margin-right: 6px; flex-shrink: 0; }
+        .search-modal-input { flex: 1; background: transparent; border: none; color: var(--text-color); font-size: 16px; outline: none; caret-color: var(--button-color);}
         .search-modal-input::placeholder { color: var(--hint-color); }
+        .search-modal-close { background: transparent; color: var(--text-color); border: none; padding: 0 0 0 16px; font-size: 16px; font-weight: 400; cursor: pointer; transition: opacity 0.2s;}
+        .search-modal-close:active { opacity: 0.5; }
         
-        /* 🌟 取消按钮：去掉背景色和边框，还原成原生的纯文本按钮 */
-        .search-modal-close { 
-            background: transparent; 
-            color: var(--text-color); 
-            border: none; 
-            padding: 0 0 0 16px; /* 只保留左侧间距 */
-            font-size: 16px; 
-            font-weight: 400; 
-            cursor: pointer; 
-            transition: opacity 0.2s;
-        }
-        
-        .search-modal-close:active { 
-            background: transparent; 
-            opacity: 0.5; /* 点击时仅仅文字变淡 */
-        }
-        
-        .search-modal-body { padding: 16px; overflow-y: auto; flex: 1; }
+        .search-modal-body { padding: 0; overflow-y: auto; flex: 1; }
         .search-placeholder-text { text-align: center; color: var(--hint-color); font-size: 14px; padding: 40px 0; font-weight: 500;}
 
         /* ========================================= */
-        /* 🌟 搜索结果专属：全屏版饱满列表！ */
+        /* 🌟 搜索结果专属：iOS 原生无界透明列表 */
         /* ========================================= */
-        .search-modal-body .list-section { display: flex; flex-direction: column; gap: 12px; padding: 4px 10px 20px; }
-        .search-modal-body .list-item { flex-direction: row; align-items: center; padding: 12px; margin-bottom: 0; background: rgba(150, 150, 150, 0.08); border-radius: 16px; }
-        
-        /* 🌟 核心放大：64x90 黄金比例 */
-        .search-modal-body .item-icon-wrapper { width: 64px; height: 90px; aspect-ratio: auto; margin-bottom: 0; margin-right: 16px; border-radius: 10px; flex-shrink: 0; }
+        .search-modal-body .list-section { display: flex; flex-direction: column; gap: 0; padding: 0 20px 20px; }
+        .search-modal-body .list-item { 
+            flex-direction: row; align-items: center; 
+            padding: 14px 0; margin-bottom: 0; 
+            background: transparent; border-radius: 0; 
+            border-bottom: 0.5px solid rgba(150, 150, 150, 0.2);
+        }
+        .search-modal-body .list-item:last-child { border-bottom: none; }
+        .search-modal-body .list-item:active { background: rgba(150, 150, 150, 0.15); border-radius: 12px; padding-left: 10px; padding-right: 10px;}
+
+        .search-modal-body .item-icon-wrapper { 
+            width: 60px; height: 85px; aspect-ratio: auto; margin-bottom: 0; margin-right: 16px; 
+            border-radius: 8px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+        }
         .search-modal-body .item-content { text-align: left; }
-        .search-modal-body .item-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; white-space: normal; word-break: break-word; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-        .search-modal-body .item-desc { font-size: 13px; }
+        .search-modal-body .item-title { font-size: 16px; font-weight: 500; margin-bottom: 6px; white-space: normal; word-break: break-word; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .search-modal-body .item-desc { font-size: 13px; color: var(--hint-color); }
     </style>
 </head>
 <body>
@@ -194,12 +142,21 @@
     <div id="dynamicGlobalBg" class="dynamic-global-bg"></div>
 
     <div class="header">
-        <svg class="logo-box" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <g fill="none" stroke="var(--button-color)" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
-                <polygon points="50,10 90,30 90,70 50,90 10,70 10,30" />
-                <polyline points="10,30 50,50 90,30" />
-                <line x1="50" y1="50" x2="50" y2="90" />
-                <polyline points="30,20 50,30 70,20" />
+        <svg class="logo-box" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 38px; height: 38px;">
+            <g fill="none" stroke="var(--button-color)" stroke-width="6.5" stroke-linejoin="round" stroke-linecap="round">
+                <polygon points="50,12 88,34 50,56 12,34" />
+                <line x1="31" y1="23" x2="69" y2="45" />
+                <line x1="12" y1="34" x2="12" y2="52" />
+                <line x1="12" y1="52" x2="34" y2="64" />
+                <line x1="34" y1="64" x2="34" y2="84" />
+                <line x1="34" y1="84" x2="50" y2="94" />
+                <line x1="50" y1="94" x2="50" y2="56" />
+                <line x1="88" y1="34" x2="88" y2="76" />
+                <line x1="88" y1="76" x2="50" y2="94" />
+                <line x1="72" y1="81" x2="72" y2="57" />
+                <line x1="72" y1="57" x2="60" y2="50" />
+                <line x1="50" y1="70" x2="62" y2="77" />
+                <line x1="62" y1="77" x2="62" y2="87" />
             </g>
         </svg>
         <div class="header-title"><span>Tg</span>box</div>
@@ -237,15 +194,13 @@
         tg.expand();
         tg.ready();
 
+        // 根据系统主题适配 CSS 变量
         function applyTheme() {
             if (tg.colorScheme === 'dark') {
-                document.documentElement.style.setProperty('--glass-bg', 'rgba(30, 30, 30, 0.65)');
-                document.documentElement.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.08)');
-                document.documentElement.style.setProperty('--glass-shadow', '0 8px 32px rgba(0, 0, 0, 0.3)');
+                // 深色模式下，稍微压暗按钮原本的明亮蓝，保护视力
+                document.documentElement.style.setProperty('--button-color', var('--tg-theme-button-color', '#3390ec'));
             } else {
-                document.documentElement.style.setProperty('--glass-bg', 'rgba(255, 255, 255, 0.75)');
-                document.documentElement.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.6)');
-                document.documentElement.style.setProperty('--glass-shadow', '0 8px 32px rgba(0, 0, 0, 0.04)');
+                document.documentElement.style.setProperty('--button-color', var('--tg-theme-button-color', '#007aff'));
             }
         }
         tg.onEvent('themeChanged', applyTheme);
@@ -254,6 +209,7 @@
         let allMovies = [];
         const dbUrl = `https://monsterboxs.github.io/tgbox-web/database.json?t=${new Date().getTime()}`;
 
+        // 拉取数据库
         fetch(dbUrl)
             .then(response => {
                 if (!response.ok) throw new Error("File not found");
@@ -271,6 +227,7 @@
                 document.getElementById('resourceList').innerHTML = '<div id="loading">❌ 数据库加载失败</div>';
             });
 
+        // 交互节点绑定
         const searchModal = document.getElementById('searchModal');
         const openSearchBtn = document.getElementById('openSearchBtn');
         const closeSearchBtn = document.getElementById('closeSearchBtn');
@@ -278,12 +235,14 @@
         const searchPlaceholder = document.getElementById('searchPlaceholder');
         const modalResourceList = document.getElementById('modalResourceList');
 
+        // 打开搜索框
         openSearchBtn.addEventListener('click', () => {
             if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             searchModal.classList.add('active');
             setTimeout(() => realSearchInput.focus(), 150); 
         });
 
+        // 关闭搜索框
         function closeModal() {
             searchModal.classList.remove('active');
             realSearchInput.value = ''; 
@@ -296,6 +255,7 @@
             if (e.target === searchModal) closeModal(); 
         });
 
+        // 实时搜索逻辑
         realSearchInput.addEventListener('input', function(e) {
             const term = e.target.value.toLowerCase().trim();
             if (!term) {
@@ -310,6 +270,7 @@
             renderList(filtered.slice(0, 100), 'modalResourceList'); 
         });
 
+        // 渲染列表通用函数
         function renderList(movies, targetId) {
             const listDiv = document.getElementById(targetId);
             if (movies.length === 0) {
@@ -320,6 +281,7 @@
             movies.forEach(item => {
                 let shortTitle = item.title;
                 let year = "经典"; 
+                // 正则提取括号内的年份，分离片名
                 const match = item.title.match(/^(.*?)(?:\s*[（\(](\d{4})[）\)])?$/);
                 if (match) {
                     shortTitle = match[1].trim(); 
