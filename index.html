@@ -267,8 +267,8 @@
                 return;
             }
             
-            // 🌟 终极防拦截：100% 本地的纯代码 SVG 占位图，断网也能瞬间显示
-            const fallbackImg = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='300' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' fill='%23e2e2e7'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='26' font-weight='bold' fill='%23999999' text-anchor='middle' dominant-baseline='middle'%3ETgbox%3C/text%3E%3C/svg%3E";
+            // 🌟 修复语法冲突：将 SVG 里的单引号全部替换为 URL 编码的双引号 (%22)
+            const fallbackImg = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22300%22 viewBox=%220 0 200 300%22%3E%3Crect width=%22200%22 height=%22300%22 fill=%22%23e2e2e7%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-family=%22sans-serif%22 font-size=%2226%22 font-weight=%22bold%22 fill=%22%23999999%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3ETgbox%3C/text%3E%3C/svg%3E";
 
             let html = "";
             movies.forEach(item => {
@@ -280,14 +280,18 @@
                     if (match[2]) year = match[2]; 
                 }
 
-                // 🌟 强行处理不规范图片链接，自动升级 HTTPS
                 let safeImgUrl = item.image ? item.image.trim() : '';
                 if (safeImgUrl.startsWith('http://')) {
                     safeImgUrl = safeImgUrl.replace('http://', 'https://');
                 }
                 
-                // 如果图床图片存在就用图床，完全不存在直接赋值为代码占位图
-                let finalImgSrc = safeImgUrl ? safeImgUrl : fallbackImg;
+                // 🌟 核心绝杀：全球 CDN 图片代理分发网络 (排除 tmdb 本身)
+                let proxiedImgUrl = safeImgUrl;
+                if (safeImgUrl && !safeImgUrl.includes('image.tmdb.org')) {
+                    proxiedImgUrl = 'https://wsrv.nl/?url=' + encodeURIComponent(safeImgUrl);
+                }
+                
+                let finalImgSrc = proxiedImgUrl ? proxiedImgUrl : fallbackImg;
 
                 html += `
                 <div class="list-item" onclick="openResource('${item.url}')">
@@ -305,7 +309,7 @@
             listDiv.innerHTML = html;
         }
 
-        // 🌟 核心修复：补全资源网址协议头，防止安卓/iOS 跳出至外部系统浏览器
+        // 🌟 核心修复：补全资源网址协议头，防止跳出至外部系统浏览器
         function openResource(url) {
             if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             if (!url) return;
@@ -320,3 +324,5 @@
     </script>
 </body>
 </html>
+
+                
