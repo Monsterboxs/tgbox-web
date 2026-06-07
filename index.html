@@ -230,7 +230,7 @@
                 document.getElementById('resourceList').innerHTML = '<div id="loading">❌ 数据库加载失败</div>';
             });
 
-        // 🌟 核心：生成 HTML 卡片的函数（保持代码DRY不重复）
+        // 🌟 核心：生成 HTML 卡片的函数（已移除 CDN 代理，解决 JAV 拦截问题）
         function generateCardsHtml(movies) {
             const fallbackImg = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22300%22 viewBox=%220 0 200 300%22%3E%3Crect width=%22200%22 height=%22300%22 fill=%22%23e2e2e7%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-family=%22sans-serif%22 font-size=%2226%22 font-weight=%22bold%22 fill=%22%23999999%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3ETgbox%3C/text%3E%3C/svg%3E";
 
@@ -247,12 +247,8 @@
                 let safeImgUrl = item.image ? item.image.trim() : '';
                 if (safeImgUrl.startsWith('http://')) safeImgUrl = safeImgUrl.replace('http://', 'https://');
                 
-                // 全球 CDN 图片代理分发网络
-                let proxiedImgUrl = safeImgUrl;
-                if (safeImgUrl && !safeImgUrl.includes('image.tmdb.org')) {
-                    proxiedImgUrl = 'https://wsrv.nl/?url=' + encodeURIComponent(safeImgUrl);
-                }
-                let finalImgSrc = proxiedImgUrl ? proxiedImgUrl : fallbackImg;
+                // 依赖头部的 no-referrer 即可破解绝大部分防盗链。直接直连，不再受制于审查拦截。
+                let finalImgSrc = safeImgUrl ? safeImgUrl : fallbackImg;
 
                 html += `
                 <div class="list-item" onclick="openResource('${item.url}')">
