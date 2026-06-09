@@ -25,7 +25,7 @@
         .dynamic-global-bg {
             position: fixed; top: -15%; left: -15%; width: 130%; height: 130%;
             z-index: -5; background-size: cover; background-position: center;
-            filter: blur(60px) brightness(0.8) saturate(1.8); /* 提高饱和度和亮度，让光透出来 */
+            filter: blur(60px) brightness(0.8) saturate(1.8); 
             opacity: 0.7; transition: background-image 1s ease-in-out; 
         }
 
@@ -43,20 +43,36 @@
         .header-title span { color: var(--button-color); }
 
         /* ========================================= */
-        /* 🌟 主页搜索触发按钮 (1:1 复刻 iOS App 资源库) */
+        /* 🌟 主页搜索触发按钮 (💧 修复版：纯正液态高光玻璃) */
         /* ========================================= */
         .search-container { padding: 5px 20px 15px; position: sticky; top: 0; z-index: 100; background: transparent; }
         .search-trigger { 
             width: 100%; height: 44px; box-sizing: border-box; 
-            background-color: rgba(118, 118, 128, 0.24); 
-            backdrop-filter: blur(40px) saturate(200%); -webkit-backdrop-filter: blur(40px) saturate(200%);
-            border: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); border-radius: 50px; 
+            
+            /* 1. 剔除纯灰底色，改用纯净水滴渐变 */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(24px) saturate(180%); 
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            
+            /* 2. 强烈的左上角高光切割（模拟水面反光） */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.5);
+            border-left: 1.5px solid rgba(255, 255, 255, 0.4);
+            
+            /* 3. 内外阴影配合产生水润立体感 */
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), inset 0 2px 6px rgba(255, 255, 255, 0.25);
+            border-radius: 50px; 
+            
             display: flex; justify-content: center; align-items: center; gap: 6px;
-            font-size: 16px; color: var(--hint-color); font-weight: 400; letter-spacing: 0.5px;
-            cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            font-size: 16px; color: var(--hint-color); font-weight: 500; letter-spacing: 0.5px;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        .search-trigger svg { width: 17px; height: 17px; stroke: currentColor; opacity: 0.7; }
-        .search-trigger:active { transform: scale(0.96); background-color: rgba(118, 118, 128, 0.32); }
+        .search-trigger svg { width: 17px; height: 17px; stroke: currentColor; opacity: 0.8; }
+        .search-trigger:active { 
+            transform: scale(0.96); 
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.1) 100%);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        }
 
         .list-header { padding: 16px 24px 10px; font-size: 14px; font-weight: 600; color: var(--hint-color); }
         
@@ -67,42 +83,24 @@
         .list-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.1s ease; margin-bottom: 10px; min-width: 0; }
         .list-item:active { transform: scale(0.95); }
         
-        /* ========================================= */
-        /* 💧 核心黑科技：极具光泽的晶莹液态玻璃材质 */
-        /* ========================================= */
+        /* 💧 卡片液态玻璃 */
         .item-icon-wrapper { 
             position: relative; width: 100%; aspect-ratio: 2 / 3; border-radius: 14px; 
             overflow: hidden; 
-            
-            /* 1. 极致纯净的透明渐变 (完全剔除灰色，只留纯白/浅色透明度) */
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.02) 100%);
-            
-            /* 2. 降低过度模糊，提高饱和，让底部光影透出来 */
             backdrop-filter: blur(16px) saturate(220%); 
             -webkit-backdrop-filter: blur(16px) saturate(220%);
-            
-            /* 3. 强烈的液面高光切割 (左上边缘亮，右下隐入背景) */
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-top: 1.5px solid rgba(255, 255, 255, 0.45);
             border-left: 1.5px solid rgba(255, 255, 255, 0.35);
-            
-            /* 4. 水滴般的内发光反光层 + 外部漂浮阴影 */
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.12), 
-                inset 0 4px 12px rgba(255, 255, 255, 0.25), 
-                inset 0 -2px 10px rgba(255, 255, 255, 0.05);
-            
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 4px 12px rgba(255, 255, 255, 0.25), inset 0 -2px 10px rgba(255, 255, 255, 0.05);
             display: flex; align-items: center; justify-content: center;
             margin-bottom: 10px; flex-shrink: 0; 
         }
 
-        /* 玻璃内若隐若现的水印点缀 */
         .item-icon-wrapper::after {
-            content: 'TGBOX'; 
-            font-size: 16px; font-weight: 800; letter-spacing: 2px;
-            color: rgba(128, 128, 128, 0.3); 
-            position: absolute; z-index: 0;
-            text-transform: uppercase;
+            content: 'TGBOX'; font-size: 16px; font-weight: 800; letter-spacing: 2px;
+            color: rgba(128, 128, 128, 0.3); position: absolute; z-index: 0; text-transform: uppercase;
         }
 
         .item-icon-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(12px) brightness(0.85); transform: scale(1.2); z-index: 1; transition: opacity 0.3s;}
@@ -116,7 +114,7 @@
         .bottom-loading { grid-column: 1 / -1; text-align: center; padding: 10px 20px 40px; color: var(--hint-color); font-size: 13px; opacity: 0.7; }
 
         /* ========================================= */
-        /* 🌟 搜索模态框 (极致通透全屏玻璃) */
+        /* 🌟 搜索模态框 (💧 修复版：全屏水波纹液态底板) */
         /* ========================================= */
         .search-modal {
             position: fixed; top: 0; left: 0; right: 0; height: 100dvh; 
@@ -128,20 +126,36 @@
         
         .search-modal-box {
             width: 100%; max-width: 100%; height: 100dvh; 
-            background: rgba(128, 128, 128, 0.05); 
+            
+            /* 剔除大灰块，改用高亮全屏水洗透视 */
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(50px) saturate(200%); 
+            -webkit-backdrop-filter: blur(50px) saturate(200%);
+            
             border: none; border-radius: 0; 
-            backdrop-filter: blur(50px) saturate(200%); -webkit-backdrop-filter: blur(50px) saturate(200%);
+            border-top: 1px solid rgba(255, 255, 255, 0.35); /* 顶部液面折射高光 */
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            
             overflow: hidden; display: flex; flex-direction: column;
             transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1); 
         }
         .search-modal.active .search-modal-box { transform: translateY(0); }
 
         .search-modal-header { display: flex; align-items: center; padding: 20px 20px 16px; border-bottom: none; }
+        
+        /* 🌟 模态框顶部的输入框 (💧 修复版：内凹形液体凹槽) */
         .search-modal-input-wrapper {
             flex: 1; height: 44px; display: flex; align-items: center;
-            background-color: rgba(118, 118, 128, 0.24); border-radius: 50px; padding: 0 16px;
+            
+            /* 输入框向下凹陷的阴影 */
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.01) 100%);
+            box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* 凹槽底部的反光边 */
+            border-radius: 50px; 
+            padding: 0 16px;
         }
-        .search-modal-input-wrapper svg { width: 17px; height: 17px; stroke: var(--hint-color); margin-right: 8px; flex-shrink: 0; opacity: 0.7; }
+        .search-modal-input-wrapper svg { width: 17px; height: 17px; stroke: var(--hint-color); margin-right: 8px; flex-shrink: 0; opacity: 0.8; }
         .search-modal-input { flex: 1; height: 100%; background: transparent; border: none; color: var(--text-color); font-size: 16px; letter-spacing: 0.5px; outline: none; caret-color: var(--button-color); padding: 0;}
         .search-modal-input::placeholder { color: var(--hint-color); }
         .search-modal-close { background: transparent; color: var(--button-color); border: none; padding: 0 0 0 16px; font-size: 16px; font-weight: 500; cursor: pointer; transition: opacity 0.2s;}
@@ -257,13 +271,10 @@
                 document.getElementById('resourceList').innerHTML = ''; 
                 loadNextPage(); 
                 
-                // 🚀 核心修复：为底部环境光海报强制加上代理！
-                // 只有底部光影亮起来了，玻璃才会真正通透！
                 if (allMovies.length > 0) {
                     let latestImage = allMovies[0].image || '';
                     if (latestImage.startsWith('http://')) latestImage = latestImage.replace('http://', 'https://');
                     let bgProxyUrl = latestImage;
-                    // 只要不是 Telegraph 官方图床，全部强制走 DDG 代理，确保环境光 100% 点亮
                     if (latestImage && !latestImage.includes('telegra.ph')) {
                         bgProxyUrl = 'https://external-content.duckduckgo.com/iu/?u=' + encodeURIComponent(latestImage);
                     }
@@ -289,13 +300,11 @@
                 let safeImgUrl = item.image ? item.image.trim() : '';
                 if (safeImgUrl.startsWith('http://')) safeImgUrl = safeImgUrl.replace('http://', 'https://');
                 
-                // 🚀 核心逻辑：全部非官方图片（包括 TMDB）一律代理，确保加载率
                 let proxiedImgUrl = safeImgUrl;
                 if (safeImgUrl && !safeImgUrl.includes('telegra.ph')) {
                     proxiedImgUrl = 'https://external-content.duckduckgo.com/iu/?u=' + encodeURIComponent(safeImgUrl);
                 }
 
-                // 🚨 失败时彻底隐藏 img 标签，完美透出底下水滴般的玻璃底座
                 html += `
                 <div class="list-item" onclick="openResource('${item.url}')">
                     <div class="item-icon-wrapper">
