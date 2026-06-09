@@ -42,30 +42,36 @@
         .header-title span { color: var(--button-color); }
 
         /* ========================================= */
-        /* 🌟 主页搜索触发按钮 (1:1 复刻 iOS App 资源库) */
+        /* 🌟 搜索触发按钮 (💧 液态玻璃质感) */
         /* ========================================= */
         .search-container { padding: 5px 20px 15px; position: sticky; top: 0; z-index: 100; background: transparent; }
         .search-trigger { 
             width: 100%; height: 44px; box-sizing: border-box; 
             
-            /* 🍏 核心：Apple 标准系统填充色 + 极致毛玻璃 */
-            background-color: rgba(118, 118, 128, 0.24); 
-            backdrop-filter: blur(40px) saturate(200%); 
-            -webkit-backdrop-filter: blur(40px) saturate(200%);
-            border: none; 
+            /* 🍏 核心：流体渐变 + 高亮内阴影 */
+            background: linear-gradient(135deg, rgba(160, 160, 170, 0.25) 0%, rgba(160, 160, 170, 0.05) 100%);
+            backdrop-filter: blur(20px) saturate(180%); 
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             
-            /* 仅保留极弱的外阴影，让它自然悬浮 */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            /* 液态反光边缘：左上亮，右下暗 */
+            border: 1px solid rgba(255, 255, 255, 0.35); 
+            border-bottom-color: rgba(255, 255, 255, 0.05);
+            border-right-color: rgba(255, 255, 255, 0.05);
+            
+            /* 悬浮阴影 + 玻璃内部水润高光 */
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.4);
             border-radius: 50px; 
             
-            /* 完美居中排版，彻底解决图标对齐问题 */
             display: flex; justify-content: center; align-items: center; gap: 6px;
-            
             font-size: 16px; color: var(--hint-color); font-weight: 400; letter-spacing: 0.5px;
-            cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .search-trigger svg { width: 17px; height: 17px; stroke: currentColor; opacity: 0.7; }
-        .search-trigger:active { transform: scale(0.96); background-color: rgba(118, 118, 128, 0.32); }
+        .search-trigger:active { 
+            transform: scale(0.96); 
+            background: linear-gradient(135deg, rgba(160, 160, 170, 0.35) 0%, rgba(160, 160, 170, 0.1) 100%);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+        }
 
         .list-header { padding: 16px 24px 10px; font-size: 14px; font-weight: 600; color: var(--hint-color); }
         
@@ -76,16 +82,23 @@
         .list-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.1s ease; margin-bottom: 10px; min-width: 0; }
         .list-item:active { transform: scale(0.95); }
         
-        /* 🌟 卡片容器：升级为磨砂玻璃材质 */
+        /* 🌟 卡片容器：升级为水润的液态玻璃材质 */
         .item-icon-wrapper { 
             position: relative; width: 100%; aspect-ratio: 2 / 3; border-radius: 12px; 
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15); overflow: hidden; 
+            overflow: hidden; 
             
-            /* 核心黑科技：苹果原生毛玻璃效果 */
-            background: rgba(150, 150, 150, 0.12); 
-            backdrop-filter: blur(25px) saturate(180%); 
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.08); /* 极细的高光玻璃边缘 */
+            /* 液态流体色彩与模糊 */
+            background: linear-gradient(135deg, rgba(180, 180, 180, 0.18) 0%, rgba(180, 180, 180, 0.02) 100%);
+            backdrop-filter: blur(20px) saturate(160%); 
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            
+            /* 液体表面张力高光边 */
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-bottom-color: rgba(255, 255, 255, 0.05);
+            border-right-color: rgba(255, 255, 255, 0.05);
+            
+            /* 深邃外阴影 + 玻璃内壁微光 */
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.35);
             
             display: flex; align-items: center; justify-content: center;
             margin-bottom: 10px; flex-shrink: 0; 
@@ -95,10 +108,11 @@
         .item-icon-wrapper::after {
             content: '🎬'; 
             font-size: 28px; opacity: 0.15; position: absolute; z-index: 0;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
-        .item-icon-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(12px) brightness(0.85); transform: scale(1.2); z-index: 1; }
-        .item-icon-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; z-index: 2; }
+        .item-icon-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(12px) brightness(0.85); transform: scale(1.2); z-index: 1; transition: opacity 0.3s;}
+        .item-icon-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; z-index: 2; transition: opacity 0.3s;}
         
         .item-content { width: 100%; text-align: center; }
         .item-title { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; letter-spacing: 0.5px;}
@@ -108,42 +122,52 @@
         .bottom-loading { grid-column: 1 / -1; text-align: center; padding: 10px 20px 40px; color: var(--hint-color); font-size: 13px; opacity: 0.7; }
 
         /* ========================================= */
-        /* 🌟 搜索模态框 (极致通透全屏玻璃) */
+        /* 🌟 搜索模态框 (通透的液态覆盖层) */
         /* ========================================= */
         .search-modal {
             position: fixed; top: 0; left: 0; right: 0; height: 100dvh; 
             z-index: 1000; background: transparent; 
             display: flex; flex-direction: column; justify-content: flex-end; 
-            opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
         .search-modal.active { opacity: 1; pointer-events: auto; }
         
         .search-modal-box {
             width: 100%; max-width: 100%; height: 100dvh; 
-            background: rgba(128, 128, 128, 0.05); 
-            border: none; border-radius: 0; 
-            backdrop-filter: blur(50px) saturate(200%); -webkit-backdrop-filter: blur(50px) saturate(200%);
+            
+            /* 液态面板自上而下的晶莹感 */
+            background: linear-gradient(to bottom, rgba(160, 160, 160, 0.15) 0%, rgba(160, 160, 160, 0.02) 100%);
+            backdrop-filter: blur(40px) saturate(200%); 
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            
+            border: none; border-radius: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2); /* 顶端折射切边 */
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            
             overflow: hidden; display: flex; flex-direction: column;
-            transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1); 
+            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1); 
         }
         .search-modal.active .search-modal-box { transform: translateY(0); }
 
         /* ========================================= */
-        /* 🌟 搜索模态框头部 (iOS 激活态无缝衔接) */
+        /* 🌟 搜索模态框头部 (内凹液态阴影输入框) */
         /* ========================================= */
         .search-modal-header { display: flex; align-items: center; padding: 20px 20px 16px; border-bottom: none; }
         
         .search-modal-input-wrapper {
-            flex: 1; height: 44px; /* 🍏 与外层按钮高度 1:1 保持一致 */
-            display: flex; align-items: center;
-            background-color: rgba(118, 118, 128, 0.24); /* 🍏 保持一致的系统级填充色 */
+            flex: 1; height: 44px; display: flex; align-items: center;
+            background-color: rgba(118, 118, 128, 0.15); 
+            
+            /* 输入框呈现向内凹陷的液面效果 */
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08), 0 1px 1px rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             border-radius: 50px; 
             padding: 0 16px;
         }
         
         .search-modal-input-wrapper svg { 
             width: 17px; height: 17px; stroke: var(--hint-color); 
-            margin-right: 8px; flex-shrink: 0; opacity: 0.7; 
+            margin-right: 8px; flex-shrink: 0; opacity: 0.8; 
         }
         
         .search-modal-input { 
@@ -154,8 +178,7 @@
         .search-modal-input::placeholder { color: var(--hint-color); }
         
         .search-modal-close { 
-            background: transparent; 
-            color: var(--button-color); /* 🍏 换成苹果原生交互的蓝色 */
+            background: transparent; color: var(--button-color);
             border: none; padding: 0 0 0 16px; 
             font-size: 16px; font-weight: 500; 
             cursor: pointer; transition: opacity 0.2s;
@@ -178,10 +201,13 @@
         .search-modal-body .list-item:last-child { border-bottom: none; }
         .search-modal-body .list-item:active { background: rgba(150, 150, 150, 0.15); border-radius: 12px; padding-left: 10px; padding-right: 10px;}
 
-        /* 模态框列表内部覆写一点间距，保留磨砂玻璃本体 */
+        /* 搜索列表的小卡片也同步液态质感 */
         .search-modal-body .item-icon-wrapper { 
             width: 60px; height: 85px; aspect-ratio: auto; margin-bottom: 0; margin-right: 16px; 
-            border-radius: 8px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+            border-radius: 8px; flex-shrink: 0; 
+            background: linear-gradient(135deg, rgba(180, 180, 180, 0.18) 0%, rgba(180, 180, 180, 0.02) 100%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1), inset 0 1px 1px rgba(255,255,255,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .search-modal-body .item-content { text-align: left; }
         .search-modal-body .item-title { font-size: 16px; font-weight: 500; margin-bottom: 6px; white-space: normal; word-break: break-word; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
@@ -258,7 +284,6 @@
         const PAGE_SIZE = 30; 
         let isFetchingNextPage = false; 
 
-        // 加上时间戳防止 JSON 缓存
         const dbUrl = `https://monsterboxs.github.io/tgbox-web/database.json?t=${new Date().getTime()}`;
 
         fetch(dbUrl)
@@ -281,7 +306,7 @@
                 document.getElementById('resourceList').innerHTML = '<div id="loading">❌ 数据库加载失败</div>';
             });
 
-        // 🌟 核心：生成 HTML 卡片（剔除老旧占位图，拥抱磨砂玻璃）
+        // 🌟 核心：生成 HTML 卡片（液态玻璃自动降级渲染）
         function generateCardsHtml(movies) {
             let html = "";
             movies.forEach(item => {
@@ -296,13 +321,12 @@
                 let safeImgUrl = item.image ? item.image.trim() : '';
                 if (safeImgUrl.startsWith('http://')) safeImgUrl = safeImgUrl.replace('http://', 'https://');
                 
-                // 🚀 使用 DuckDuckGo 无限制代理，解决部分外部图床防盗链（Telegraph 和 TMDB 直连）
                 let proxiedImgUrl = safeImgUrl;
                 if (safeImgUrl && !safeImgUrl.includes('image.tmdb.org') && !safeImgUrl.includes('telegra.ph')) {
                     proxiedImgUrl = 'https://external-content.duckduckgo.com/iu/?u=' + encodeURIComponent(safeImgUrl);
                 }
 
-                // 🚨 如果图片加载失败 (onerror)，直接隐藏 img 标签，完美露出底部的通透磨砂玻璃！
+                // 🚨 图片加载失败时，直接 display: none 隐藏 img 节点，完美露出底层剔透的液态玻璃容器
                 html += `
                 <div class="list-item" onclick="openResource('${item.url}')">
                     <div class="item-icon-wrapper">
@@ -319,7 +343,6 @@
             return html;
         }
 
-        // 瀑布流加载逻辑
         function loadNextPage() {
             if (currentLoadedCount >= allMovies.length) {
                 document.getElementById('bottomLoader').innerText = "没有更多了 🎬";
@@ -338,7 +361,6 @@
             }
         }
 
-        // 页面滚动监听
         function handleScroll() {
             if (isFetchingNextPage || currentLoadedCount >= allMovies.length) return;
             const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
