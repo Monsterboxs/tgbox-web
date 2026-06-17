@@ -21,7 +21,7 @@
             overflow-x: hidden; -webkit-font-smoothing: antialiased;
         }
 
-        /* 🌟 全局动态环境光背景 (这是玻璃通透的灵魂) */
+        /* 🌟 全局动态环境光背景 */
         .dynamic-global-bg {
             position: fixed; top: -15%; left: -15%; width: 130%; height: 130%;
             z-index: -5; background-size: cover; background-position: center;
@@ -29,80 +29,76 @@
             opacity: 0.7; transition: background-image 1s ease-in-out; 
         }
 
-        /* ========================================= */
         /* 🌟 顶部极简 Logo 与标题 */
-        /* ========================================= */
         .header { padding: 24px 20px 10px; display: flex; align-items: center; gap: 10px; }
         .logo-box { flex-shrink: 0; transition: transform 0.3s ease; }
         .header:active .logo-box { transform: scale(0.9); }
-        .header-title {
-            font-size: 36px; font-weight: 900; letter-spacing: -1.5px;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-            color: var(--text-color); 
-        }
+        .header-title { font-size: 36px; font-weight: 900; letter-spacing: -1.5px; color: var(--text-color); }
         .header-title span { color: var(--button-color); }
 
-        /* ========================================= */
-        /* 🌟 主页搜索触发按钮 (💧 修复版：纯正液态高光玻璃) */
-        /* ========================================= */
-        .search-container { padding: 5px 20px 15px; position: sticky; top: 0; z-index: 100; background: transparent; }
+        /* 🌟 主页搜索触发按钮 */
+        .search-container { padding: 5px 20px 10px; position: sticky; top: 0; z-index: 100; background: transparent; }
         .search-trigger { 
             width: 100%; height: 44px; box-sizing: border-box; 
-            
-            /* 1. 剔除纯灰底色，改用纯净水滴渐变 */
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.02) 100%);
-            backdrop-filter: blur(24px) saturate(180%); 
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            
-            /* 2. 强烈的左上角高光切割（模拟水面反光） */
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top: 1.5px solid rgba(255, 255, 255, 0.5);
-            border-left: 1.5px solid rgba(255, 255, 255, 0.4);
-            
-            /* 3. 内外阴影配合产生水润立体感 */
+            backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-top: 1.5px solid rgba(255, 255, 255, 0.5); border-left: 1.5px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), inset 0 2px 6px rgba(255, 255, 255, 0.25);
-            border-radius: 50px; 
-            
-            display: flex; justify-content: center; align-items: center; gap: 6px;
+            border-radius: 50px; display: flex; justify-content: center; align-items: center; gap: 6px;
             font-size: 16px; color: var(--hint-color); font-weight: 500; letter-spacing: 0.5px;
             cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .search-trigger svg { width: 17px; height: 17px; stroke: currentColor; opacity: 0.8; }
-        .search-trigger:active { 
-            transform: scale(0.96); 
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.1) 100%);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        .search-trigger:active { transform: scale(0.96); }
+
+        /* ========================================= */
+        /* 🌟 分类导航栏 (横向滑动 + 纯文字液态药丸) */
+        /* ========================================= */
+        .category-scroll-wrapper {
+            width: 100%; overflow-x: auto; white-space: nowrap;
+            padding: 5px 20px 15px; box-sizing: border-box;
+            scrollbar-width: none; /* 隐藏 Firefox 滚动条 */
+            position: sticky; top: 59px; z-index: 99; /* 吸顶效果 */
+        }
+        .category-scroll-wrapper::-webkit-scrollbar { display: none; } /* 隐藏 Chrome/Safari 滚动条 */
+        
+        .category-list { display: inline-flex; gap: 10px; }
+        
+        .category-pill {
+            padding: 8px 18px; border-radius: 50px;
+            font-size: 14px; font-weight: 500; letter-spacing: 0.5px;
+            color: var(--text-color); cursor: pointer;
+            
+            /* 💧 晶莹剔透的水滴切边材质 */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.15); border-top-color: rgba(255, 255, 255, 0.45); border-left-color: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .category-pill:active { transform: scale(0.92); }
+        .category-pill.active {
+            background: var(--button-color); color: #ffffff;
+            border-color: transparent; text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 16px rgba(0, 122, 255, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.3);
         }
 
-        .list-header { padding: 16px 24px 10px; font-size: 14px; font-weight: 600; color: var(--hint-color); }
-        
-        /* ========================================= */
-        /* 🌟 主页专属：两列大网格海报墙 */
-        /* ========================================= */
+        /* 🌟 两列大网格海报墙 */
         .list-section { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 0 20px 40px; }
         .list-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.1s ease; margin-bottom: 10px; min-width: 0; }
         .list-item:active { transform: scale(0.95); }
         
         /* 💧 卡片液态玻璃 */
         .item-icon-wrapper { 
-            position: relative; width: 100%; aspect-ratio: 2 / 3; border-radius: 14px; 
-            overflow: hidden; 
+            position: relative; width: 100%; aspect-ratio: 2 / 3; border-radius: 14px; overflow: hidden; 
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.02) 100%);
-            backdrop-filter: blur(16px) saturate(220%); 
-            -webkit-backdrop-filter: blur(16px) saturate(220%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top: 1.5px solid rgba(255, 255, 255, 0.45);
-            border-left: 1.5px solid rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(16px) saturate(220%); -webkit-backdrop-filter: blur(16px) saturate(220%);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-top: 1.5px solid rgba(255, 255, 255, 0.45); border-left: 1.5px solid rgba(255, 255, 255, 0.35);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 4px 12px rgba(255, 255, 255, 0.25), inset 0 -2px 10px rgba(255, 255, 255, 0.05);
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 10px; flex-shrink: 0; 
+            display: flex; align-items: center; justify-content: center; margin-bottom: 10px; flex-shrink: 0; 
         }
 
-        .item-icon-wrapper::after {
-            content: 'TGBOX'; font-size: 16px; font-weight: 800; letter-spacing: 2px;
-            color: rgba(128, 128, 128, 0.3); position: absolute; z-index: 0; text-transform: uppercase;
-        }
-
+        .item-icon-wrapper::after { content: 'TGBOX'; font-size: 16px; font-weight: 800; letter-spacing: 2px; color: rgba(128, 128, 128, 0.3); position: absolute; z-index: 0; }
         .item-icon-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(12px) brightness(0.85); transform: scale(1.2); z-index: 1; transition: opacity 0.3s;}
         .item-icon-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; z-index: 2; transition: opacity 0.3s;}
         
@@ -113,47 +109,26 @@
         #loading { grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: var(--hint-color); font-size: 15px; font-weight: 500;}
         .bottom-loading { grid-column: 1 / -1; text-align: center; padding: 10px 20px 40px; color: var(--hint-color); font-size: 13px; opacity: 0.7; }
 
-        /* ========================================= */
-        /* 🌟 搜索模态框 (💧 修复版：全屏水波纹液态底板) */
-        /* ========================================= */
-        .search-modal {
-            position: fixed; top: 0; left: 0; right: 0; height: 100dvh; 
-            z-index: 1000; background: transparent; 
-            display: flex; flex-direction: column; justify-content: flex-end; 
-            opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
-        }
+        /* 🌟 搜索模态框 */
+        .search-modal { position: fixed; top: 0; left: 0; right: 0; height: 100dvh; z-index: 1000; background: transparent; display: flex; flex-direction: column; justify-content: flex-end; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
         .search-modal.active { opacity: 1; pointer-events: auto; }
         
         .search-modal-box {
             width: 100%; max-width: 100%; height: 100dvh; 
-            
-            /* 剔除大灰块，改用高亮全屏水洗透视 */
             background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.02) 100%);
-            backdrop-filter: blur(50px) saturate(200%); 
-            -webkit-backdrop-filter: blur(50px) saturate(200%);
-            
-            border: none; border-radius: 0; 
-            border-top: 1px solid rgba(255, 255, 255, 0.35); /* 顶部液面折射高光 */
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
-            
-            overflow: hidden; display: flex; flex-direction: column;
-            transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1); 
+            backdrop-filter: blur(50px) saturate(200%); -webkit-backdrop-filter: blur(50px) saturate(200%);
+            border: none; border-radius: 0; border-top: 1px solid rgba(255, 255, 255, 0.35); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            overflow: hidden; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1); 
         }
         .search-modal.active .search-modal-box { transform: translateY(0); }
 
         .search-modal-header { display: flex; align-items: center; padding: 20px 20px 16px; border-bottom: none; }
         
-        /* 🌟 模态框顶部的输入框 (💧 修复版：内凹形液体凹槽) */
         .search-modal-input-wrapper {
             flex: 1; height: 44px; display: flex; align-items: center;
-            
-            /* 输入框向下凹陷的阴影 */
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.01) 100%);
             box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* 凹槽底部的反光边 */
-            border-radius: 50px; 
-            padding: 0 16px;
+            border: 1px solid rgba(0, 0, 0, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.15); border-radius: 50px; padding: 0 16px;
         }
         .search-modal-input-wrapper svg { width: 17px; height: 17px; stroke: var(--hint-color); margin-right: 8px; flex-shrink: 0; opacity: 0.8; }
         .search-modal-input { flex: 1; height: 100%; background: transparent; border: none; color: var(--text-color); font-size: 16px; letter-spacing: 0.5px; outline: none; caret-color: var(--button-color); padding: 0;}
@@ -164,23 +139,14 @@
         .search-modal-body { padding: 0; overflow-y: auto; flex: 1; }
         .search-placeholder-text { text-align: center; color: var(--hint-color); font-size: 14px; padding: 40px 0; font-weight: 500;}
 
-        /* ========================================= */
-        /* 🌟 搜索结果专属：iOS 原生无界透明列表 */
-        /* ========================================= */
+        /* 🌟 搜索结果列表 */
         .search-modal-body .list-section { display: flex; flex-direction: column; gap: 0; padding: 0 20px 20px; }
-        .search-modal-body .list-item { 
-            flex-direction: row; align-items: center; 
-            padding: 14px 0; margin-bottom: 0; 
-            background: transparent; border-radius: 0; 
-            border-bottom: 0.5px solid rgba(150, 150, 150, 0.2);
-        }
+        .search-modal-body .list-item { flex-direction: row; align-items: center; padding: 14px 0; margin-bottom: 0; background: transparent; border-radius: 0; border-bottom: 0.5px solid rgba(150, 150, 150, 0.2); }
         .search-modal-body .list-item:last-child { border-bottom: none; }
         .search-modal-body .list-item:active { background: rgba(150, 150, 150, 0.15); border-radius: 12px; padding-left: 10px; padding-right: 10px;}
 
-        /* 模态框里的小卡片也升级为通透液态 */
         .search-modal-body .item-icon-wrapper { 
-            width: 60px; height: 85px; aspect-ratio: auto; margin-bottom: 0; margin-right: 16px; 
-            border-radius: 8px; flex-shrink: 0; 
+            width: 60px; height: 85px; aspect-ratio: auto; margin-bottom: 0; margin-right: 16px; border-radius: 8px; flex-shrink: 0; 
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.02) 100%);
             box-shadow: 0 4px 12px rgba(0,0,0,0.1), inset 0 2px 6px rgba(255,255,255,0.25);
             border-top: 1px solid rgba(255, 255, 255, 0.4); border-left: 1px solid rgba(255, 255, 255, 0.3);
@@ -211,7 +177,11 @@
         </div>
     </div>
 
-    <div class="list-header">✨ 最新入库</div>
+    <div class="category-scroll-wrapper">
+        <div class="category-list" id="categoryList">
+            </div>
+    </div>
+
     <div class="list-section" id="resourceList">
         <div id="loading">🚀 正在连通影视数据库...</div>
     </div>
@@ -243,21 +213,21 @@
         function applyTheme() {
             if (tg.colorScheme === 'dark') {
                 document.documentElement.style.setProperty('--glass-bg', 'rgba(30, 30, 30, 0.65)');
-                document.documentElement.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.08)');
-                document.documentElement.style.setProperty('--glass-shadow', '0 8px 32px rgba(0, 0, 0, 0.3)');
             } else {
                 document.documentElement.style.setProperty('--glass-bg', 'rgba(255, 255, 255, 0.75)');
-                document.documentElement.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.6)');
-                document.documentElement.style.setProperty('--glass-shadow', '0 8px 32px rgba(0, 0, 0, 0.04)');
             }
         }
         tg.onEvent('themeChanged', applyTheme);
         applyTheme(); 
 
         let allMovies = [];
+        let filteredMovies = []; // 新增：用于存放当前分类下的数据
         let currentLoadedCount = 0;
         const PAGE_SIZE = 30; 
         let isFetchingNextPage = false; 
+        
+        let currentCategory = "全部"; // 当前激活的分类
+        let extractedCategories = []; // 从数据中提取的所有分类
 
         const dbUrl = `https://monsterboxs.github.io/tgbox-web/database.json?t=${new Date().getTime()}`;
 
@@ -268,6 +238,13 @@
             })
             .then(data => {
                 allMovies = data;
+                filteredMovies = allMovies; // 初始展示全部
+                
+                // 1. 动态分析提取所有分类
+                extractedCategories = extractCategories(allMovies);
+                // 2. 渲染分类导航栏
+                renderCategoryNav(extractedCategories);
+                
                 document.getElementById('resourceList').innerHTML = ''; 
                 loadNextPage(); 
                 
@@ -286,6 +263,63 @@
                 document.getElementById('resourceList').innerHTML = '<div id="loading">❌ 数据库加载失败</div>';
             });
 
+        // 🌟 分析 JSON 数据，智能提取分类标签 (纯文字无表情)
+        function extractCategories(movies) {
+            let genreSet = new Set();
+            movies.forEach(m => {
+                if (m.genres && Array.isArray(m.genres)) {
+                    m.genres.forEach(g => genreSet.add(g));
+                }
+            });
+            // 过滤掉杂项，整理出干净的标签列表
+            let dynamicGenres = Array.from(genreSet).filter(g => g !== "其他" && g !== "JAV");
+            return ["全部", "电影", "剧集", "JAV", ...dynamicGenres];
+        }
+
+        // 🌟 渲染横向分类栏
+        function renderCategoryNav(categories) {
+            const catList = document.getElementById('categoryList');
+            let html = '';
+            categories.forEach(cat => {
+                html += `<div class="category-pill ${cat === currentCategory ? 'active' : ''}" onclick="selectCategory('${cat}')">${cat}</div>`;
+            });
+            catList.innerHTML = html;
+        }
+
+        // 🌟 点击分类时的无损过滤逻辑
+        function selectCategory(cat) {
+            if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            currentCategory = cat;
+            renderCategoryNav(extractedCategories); // 重新渲染更新 Active 状态
+            
+            // 核心筛选引擎
+            if (cat === "全部") {
+                filteredMovies = allMovies;
+            } else if (cat === "电影") {
+                filteredMovies = allMovies.filter(m => m.type === 'movie');
+            } else if (cat === "剧集") {
+                filteredMovies = allMovies.filter(m => m.type === 'tv');
+            } else if (cat === "JAV") {
+                filteredMovies = allMovies.filter(m => m.type === 'jav' || (m.genres && m.genres.includes('JAV')));
+            } else {
+                // 筛选具体的类型 (例如：动作、科幻等)
+                filteredMovies = allMovies.filter(m => m.genres && m.genres.includes(cat));
+            }
+
+            // 重置列表，滚回顶部，重新加载该分类的第一页
+            currentLoadedCount = 0;
+            document.getElementById('resourceList').innerHTML = '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            if (filteredMovies.length === 0) {
+                document.getElementById('resourceList').innerHTML = '<div id="loading">该分类下暂无资源 📭</div>';
+                document.getElementById('bottomLoader').style.display = 'none';
+            } else {
+                loadNextPage();
+            }
+        }
+
+        // 🌟 生成 HTML 卡片
         function generateCardsHtml(movies) {
             let html = "";
             movies.forEach(item => {
@@ -321,18 +355,20 @@
             return html;
         }
 
+        // 🌟 修复：改用 filteredMovies 进行分页加载
         function loadNextPage() {
-            if (currentLoadedCount >= allMovies.length) {
+            if (currentLoadedCount >= filteredMovies.length) {
                 document.getElementById('bottomLoader').innerText = "没有更多了 🎬";
+                document.getElementById('bottomLoader').style.display = 'block';
                 return;
             }
 
-            const nextBatch = allMovies.slice(currentLoadedCount, currentLoadedCount + PAGE_SIZE);
+            const nextBatch = filteredMovies.slice(currentLoadedCount, currentLoadedCount + PAGE_SIZE);
             const listDiv = document.getElementById('resourceList');
             listDiv.insertAdjacentHTML('beforeend', generateCardsHtml(nextBatch));
             currentLoadedCount += PAGE_SIZE;
             
-            if (currentLoadedCount < allMovies.length) {
+            if (currentLoadedCount < filteredMovies.length) {
                 document.getElementById('bottomLoader').style.display = 'block';
             } else {
                 document.getElementById('bottomLoader').innerText = "没有更多了 🎬";
@@ -340,7 +376,7 @@
         }
 
         function handleScroll() {
-            if (isFetchingNextPage || currentLoadedCount >= allMovies.length) return;
+            if (isFetchingNextPage || currentLoadedCount >= filteredMovies.length) return;
             const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
             const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
             const clientHeight = document.documentElement.clientHeight || window.innerHeight;
@@ -352,6 +388,7 @@
             }
         }
 
+        // 模态搜索框交互逻辑保持不变
         const searchModal = document.getElementById('searchModal');
         const openSearchBtn = document.getElementById('openSearchBtn');
         const closeSearchBtn = document.getElementById('closeSearchBtn');
